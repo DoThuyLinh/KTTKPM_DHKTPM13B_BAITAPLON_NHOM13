@@ -20,7 +20,6 @@ namespace DataAccess
             _personDAL = new PersonDAL();
             _accountCardDAL = new AccountCardDAL();
             _atmTransactionDAL = new AtmTransactionDAL();
-
         }
     }
 }

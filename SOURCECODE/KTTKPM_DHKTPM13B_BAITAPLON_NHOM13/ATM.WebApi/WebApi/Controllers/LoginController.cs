@@ -1,4 +1,5 @@
 ﻿using ApiModel;
+using BusinessLogic;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace WebApi.Controllers
 {
     public class LoginController : ApiController
     {
+        private UserLoginBLL _userLoginBLL = new UserLoginBLL();
         [Route("Login")]
         [SwaggerResponse(200, "Returns detail login", typeof(ApiUserLoginModel))]
         [SwaggerResponse(500, "Internal Server Error")]
