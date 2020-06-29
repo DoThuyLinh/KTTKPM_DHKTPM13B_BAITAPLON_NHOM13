@@ -54,8 +54,10 @@
     <Compile Include="EntityDAL\AccountCardDAL.cs" />
     <Compile Include="EntityDAL\AddHistoryDAL.cs" />
     <Compile Include="DataContext\AtmDataContext.cs" />
+    <Compile Include="EntityDAL\ATMInfoDAL.cs" />
     <Compile Include="EntityDAL\AtmTransactionDAL.cs" />
     <Compile Include="DataContext\DataContextBLO.cs" />
+    <Compile Include="EntityDAL\InvoiceDAL.cs" />
     <Compile Include="Migrations\202006280928587_Initial.cs" />
     <Compile Include="Migrations\202006280928587_Initial.designer.cs">
       <DependentUpon>202006280928587_Initial.cs</DependentUpon>

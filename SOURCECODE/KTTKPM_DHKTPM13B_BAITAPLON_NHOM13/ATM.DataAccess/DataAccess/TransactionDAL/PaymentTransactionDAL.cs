@@ -10,7 +10,7 @@ namespace DataAccess
 {
     public class PaymentTransactionDAL:DataContextBLO
     {
-        public ApiPaymentTransactionModel PaymentTransaction(string acc, double transMoney, int atmID)
+        public ApiPaymentTransactionModel PaymentTransaction(string acc, double paymentMoney, int atmID)
         {
             var person = new Person();
             UserLogin userLogin = _dbContext.UserLogins.FirstOrDefault(x => x.AccountNumber.Equals(acc));
@@ -28,23 +28,27 @@ namespace DataAccess
                 if (accountCard.BankID == bankInfo.BankID)
                 {
                     payment.PersonName = person.PersonName;
-                    payment.TransactionMoney = transMoney;
+                    payment.TransactionMoney = paymentMoney;
                     payment.PaymentFee = accountCard.InternalFee;
                 }
                 else if (accountCard.BankID != bankInfo.BankID)
                 {
                     payment.PersonName = person.PersonName;
-                    payment.TransactionMoney = transMoney;
+                    payment.TransactionMoney = paymentMoney;
                     payment.PaymentFee = accountCard.ForeignFee;
                 }
                 try
                 {
                     if (payment != null)
                     {
-                        _addHistoryDAL.AddATMHistory(atmID);
-                        _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
-                        _accountCardDAL.UpdateBalanceAccountPayment(accountCard, transMoney+payment.PaymentFee);
-                        _atmTransactionDAL.AddTransaction(accountCard.AccountNumber, transMoney, atmID);
+                        if(_accountCardDAL.UpdateBalanceAccountPayment(accountCard, paymentMoney - payment.PaymentFee) == true)
+                        {
+                            _addHistoryDAL.AddATMHistory(atmID);
+                            _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
+                            _atmInfoDAL.UpdateAvailableBalancePaymentATM(atmID, paymentMoney);
+                            payment.AvailableBalance = accountCard.AvailableBalance;
+                            _atmTransactionDAL.AddTransaction(accountCard.AccountNumber, paymentMoney, atmID);
+                        }
                         return payment;
                     }
                 }

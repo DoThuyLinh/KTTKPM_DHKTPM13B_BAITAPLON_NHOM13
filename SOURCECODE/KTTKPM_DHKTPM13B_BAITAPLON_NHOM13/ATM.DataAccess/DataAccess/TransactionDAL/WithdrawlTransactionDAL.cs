@@ -46,11 +46,15 @@ namespace DataAccess
                 {
                     if(withdrawl != null)
                     {
-                        _addHistoryDAL.AddATMHistory(atmID);
-                        _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
-                        _accountCardDAL.UpdateBalanceAccount(accountCard, transMoney+withdrawl.WithdrawlFee);
-                        _atmTransactionDAL.AddTransaction(accountCard.AccountNumber, transMoney, atmID);
-                        return withdrawl;
+                        if(_accountCardDAL.UpdateBalanceAccount(accountCard, transMoney + withdrawl.WithdrawlFee) == true)
+                        {
+                            _addHistoryDAL.AddATMHistory(atmID);
+                            _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
+                            _atmInfoDAL.UpdateAvailableBalanceWithdrawlATM(atmID, transMoney);
+                            _atmTransactionDAL.AddTransaction(accountCard.AccountNumber, transMoney, atmID);
+                            withdrawl.AvailableBalance = accountCard.AvailableBalance;
+                            return withdrawl;
+                        }
                     }
                 }
                 catch (Exception)

@@ -28,14 +28,14 @@ namespace DataAccess
                 var transfer = new ApiTransferTransactionModel();
                 if (accountCard.BankID == bankInfo.BankID)
                 {
-                    transfer.PersonName = person.PersonName;
+                    transfer.PersonNameTransfer = person.PersonName;
                     transfer.TransactionMoney = transMoney;
                     transfer.BeneficiaryCard = beneficiary;
                     transfer.TransferFee = accountCard.InternalFee;
                 }
                 else if (accountCard.BankID != bankInfo.BankID)
                 {
-                    transfer.PersonName = person.PersonName;
+                    transfer.PersonNameTransfer = person.PersonName;
                     transfer.TransactionMoney = transMoney;
                     transfer.BeneficiaryCard = beneficiary;
                     transfer.TransferFee = accountCard.ForeignFee;
@@ -44,11 +44,16 @@ namespace DataAccess
                 {
                     if(benefic != null)
                     {
-                        _addHistoryDAL.AddATMHistory(atmID);
-                        _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
-                        _accountCardDAL.UpdateBalanceAccount(accountCard, transMoney + transfer.TransferFee);
-                        _atmTransactionDAL.AddTransferTransaction(accountCard.AccountNumber, beneficiary, transMoney, atmID);
-                        return transfer;
+                        var receiver = _personDAL.GetPerson(benefic.PersonID);
+                        transfer.PersonNameReceiver = receiver.PersonName;
+                        if (_accountCardDAL.UpdateBalanceAccount(accountCard, transMoney + transfer.TransferFee) == true)
+                        {
+                            _addHistoryDAL.AddATMHistory(atmID);
+                            _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
+                            transfer.AvailableBalance = accountCard.AvailableBalance;
+                            _atmTransactionDAL.AddTransferTransaction(accountCard.AccountNumber, beneficiary, transMoney, atmID);
+                            return transfer;
+                        }
                     }
                 }
                 catch (Exception)

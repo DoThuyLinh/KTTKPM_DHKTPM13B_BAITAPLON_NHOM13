@@ -70,7 +70,7 @@ namespace DataAccess
         {
             try
             {
-                UserLogin userLogin = new UserLogin();
+                UserLogin userLogin = _dbContext.UserLogins.FirstOrDefault(x=>x.AccountNumber.Equals(acc));
                 userLogin.Password = newPass;
                 _dbContext.SaveChanges();
                 return true;

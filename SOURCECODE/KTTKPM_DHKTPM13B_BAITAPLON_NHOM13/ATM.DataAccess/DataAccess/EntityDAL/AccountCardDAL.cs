@@ -32,14 +32,14 @@ namespace DataAccess
             return false;
         }
 
-        public bool UpdateBalanceAccountPayment(AccountCard account, double transMoney)
+        public bool UpdateBalanceAccountPayment(AccountCard account, double paymentMoney)
         {
             try
             {
                 var accountcard = _dbContext.AccountCards.FirstOrDefault(x => x.AccountNumber.Equals(account.AccountNumber));
                 if (accountcard != null)
                 {
-                    double balance = accountcard.AvailableBalance + transMoney;
+                    double balance = accountcard.AvailableBalance + paymentMoney;
                     accountcard.AvailableBalance = balance;
                     _dbContext.SaveChanges();
                     return true;
