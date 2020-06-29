@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiChangePinTransactionModel.cs" />
+    <Compile Include="ApiCheckBalanceTransactionModel.cs" />
     <Compile Include="ApiPaymentTransactionModel.cs" />
     <Compile Include="ApiTransferTransactionModel.cs" />
     <Compile Include="ApiWithdrawlTransactionModel.cs" />

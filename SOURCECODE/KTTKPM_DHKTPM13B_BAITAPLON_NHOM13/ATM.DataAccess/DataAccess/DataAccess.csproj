@@ -60,6 +60,8 @@
     <Compile Include="Migrations\202006280928587_Initial.designer.cs">
       <DependentUpon>202006280928587_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="TransactionDAL\ChangePinTransactionDAL.cs" />
+    <Compile Include="TransactionDAL\CheckBalanceTransactionDAL.cs" />
     <Compile Include="TransactionDAL\PaymentTransactionDAL.cs" />
     <Compile Include="EntityDAL\PersonDAL.cs" />
     <Compile Include="TransactionDAL\TransferTransactionDAL.cs" />
