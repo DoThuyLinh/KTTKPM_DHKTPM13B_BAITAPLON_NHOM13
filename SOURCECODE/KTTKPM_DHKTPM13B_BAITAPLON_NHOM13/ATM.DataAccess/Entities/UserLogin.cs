@@ -27,5 +27,9 @@ namespace Entities
             this.AccountNumber = accountNumber;
             this.Password = password;
         }
+        public UserLogin()
+        {
+
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace DataAccess
                 AccountCard accountCard = _dbContext.AccountCards.FirstOrDefault(x => x.AccountNumber.Equals(userLogin.AccountNumber));
                 ATMInfo atmInfo = _dbContext.ATMInfos.FirstOrDefault(x => x.ATMID == atmID);
                 BankInfo bankInfo = _dbContext.BankInfos.FirstOrDefault(x => x.BankID == atmInfo.BankID);
-
+                AccountCard benefic = _dbContext.AccountCards.FirstOrDefault(x => x.AccountNumber == beneficiary);
                 if (accountCard != null)
                 {
                     person = _personDAL.GetPerson(accountCard.PersonID);
@@ -42,11 +42,14 @@ namespace DataAccess
                 }
                 try
                 {
-                    _addHistoryDAL.AddATMHistory(atmID);
-                    _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
-                    _accountCardDAL.UpdateBalanceAccount(accountCard, transMoney+transfer.TransferFee);
-                    _atmTransactionDAL.AddTransferTransaction(accountCard.AccountNumber, beneficiary, transMoney, atmID);
-                    return transfer;
+                    if(benefic != null)
+                    {
+                        _addHistoryDAL.AddATMHistory(atmID);
+                        _addHistoryDAL.AddAccountHistory(accountCard.AccountNumber);
+                        _accountCardDAL.UpdateBalanceAccount(accountCard, transMoney + transfer.TransferFee);
+                        _atmTransactionDAL.AddTransferTransaction(accountCard.AccountNumber, beneficiary, transMoney, atmID);
+                        return transfer;
+                    }
                 }
                 catch (Exception)
                 {

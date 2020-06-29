@@ -13,6 +13,7 @@ namespace DataAccess
         protected PersonDAL _personDAL;
         protected AccountCardDAL _accountCardDAL;
         protected AtmTransactionDAL _atmTransactionDAL;
+        protected UserLoginDAL _userLoginDAL;
         public DataContextBLO()
         {
             _dbContext = new AtmDataContext();
@@ -20,7 +21,7 @@ namespace DataAccess
             _personDAL = new PersonDAL();
             _accountCardDAL = new AccountCardDAL();
             _atmTransactionDAL = new AtmTransactionDAL();
-
+            _userLoginDAL = new UserLoginDAL();
         }
     }
 }

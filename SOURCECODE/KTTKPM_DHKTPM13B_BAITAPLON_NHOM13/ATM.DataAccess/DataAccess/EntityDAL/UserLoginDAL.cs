@@ -13,7 +13,7 @@ namespace DataAccess
         public UserLoginDAL()
         {
         }
-        public ApiUserLoginModel KT(string acc, string pass, int atmID)
+        public ApiUserLoginModel UserLogin(string acc, string pass, int atmID)
         {
             var account = new AccountCard();
             var person = new Person();
@@ -65,6 +65,21 @@ namespace DataAccess
                 }
             }
             return null;
+        }
+        public bool UpdateUserPassword(string acc,string newPass)
+        {
+            try
+            {
+                UserLogin userLogin = new UserLogin();
+                userLogin.Password = newPass;
+                _dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
         }
     }
 }
