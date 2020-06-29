@@ -69,5 +69,9 @@ namespace Entities
             this.BankID = bankID;
             this.PersonID = personID;
         }
+        public AccountCard()
+        {
+
+        }
     }
 }

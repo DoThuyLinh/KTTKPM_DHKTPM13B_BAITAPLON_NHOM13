@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace Entities
 
         [RegularExpression("^\\d{6}$", ErrorMessage = "Must be 6 characters")]
         public string Password { get; set; }
+        [DefaultValue(0)]
+        public int CountPassword { get; set; }
 
         public virtual ICollection<AccountHistory> AccountHistories { get; set; }
         public virtual ICollection<ATMTransaction> ATMTransactions { get; set; }
