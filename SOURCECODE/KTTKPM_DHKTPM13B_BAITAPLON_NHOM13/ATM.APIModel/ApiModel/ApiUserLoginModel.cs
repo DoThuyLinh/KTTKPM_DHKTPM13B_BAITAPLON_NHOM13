@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiModel
 {
-    public class ApiUserLoginModel
+    public class ApiUserLoginModel : ApiJsonResult
     {
         public enum AccountRole
         {
