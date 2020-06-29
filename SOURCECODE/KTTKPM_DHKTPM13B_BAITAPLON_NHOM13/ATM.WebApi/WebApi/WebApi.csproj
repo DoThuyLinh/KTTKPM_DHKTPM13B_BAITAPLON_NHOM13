@@ -96,6 +96,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PaymentTransactionController.cs" />
     <Compile Include="Controllers\TransferTransactionController.cs" />
     <Compile Include="Controllers\WithdrawlTransactionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -125,6 +126,10 @@
     <ProjectReference Include="..\..\ATM.DataAccess\DataAccess\DataAccess.csproj">
       <Project>{7e273594-0285-4c49-b66c-6e822e5d7c2c}</Project>
       <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+      <Project>{3d765f45-ba04-444a-b1c2-b7b0244e270b}</Project>
+      <Name>BusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
