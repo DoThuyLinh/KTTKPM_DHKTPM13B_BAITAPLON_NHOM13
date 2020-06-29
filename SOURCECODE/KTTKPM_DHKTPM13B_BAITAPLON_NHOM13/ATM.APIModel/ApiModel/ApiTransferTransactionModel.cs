@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiModel
 {
-    public class ApiTransferTransactionModel
+    public class ApiTransferTransactionModel : ApiJsonResult
     {
         public double TransactionMoney { get; set; }
         public string PersonName { get; set; }
