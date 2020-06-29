@@ -31,7 +31,7 @@ namespace Entities
         [Required]
         public DateTime CardCreationDate { get; set; }
 
-        [Range(0, Double.MaxValue, ErrorMessage = "Property: Code Error: The AvailableBalance field is required.")]
+        [Range(0, Double.MaxValue, ErrorMessage = "Property: Code Error:The AvailableBalance field is required.")]
         public double AvailableBalance { get; set; }
 
         [DefaultValue(3300)]
