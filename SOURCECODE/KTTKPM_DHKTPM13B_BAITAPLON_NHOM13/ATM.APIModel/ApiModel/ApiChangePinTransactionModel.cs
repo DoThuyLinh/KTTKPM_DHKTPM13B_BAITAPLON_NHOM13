@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace ApiModel
 {
-    public class ApiChangePinTransactionModel
+    public class ApiChangePinTransactionModel : ApiJsonResult
     {
         public string Message { get; set; }
+        public ApiChangePinTransactionModel()
+        {
+
+        }
     }
 }

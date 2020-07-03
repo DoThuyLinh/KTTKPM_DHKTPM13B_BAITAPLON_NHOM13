@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApiModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace Entities
         {
             this.BankName = bankName;
             this.BankAddress = bankAddress;
+        }
+        public BankInfo()
+        {
+
         }
     }
 }

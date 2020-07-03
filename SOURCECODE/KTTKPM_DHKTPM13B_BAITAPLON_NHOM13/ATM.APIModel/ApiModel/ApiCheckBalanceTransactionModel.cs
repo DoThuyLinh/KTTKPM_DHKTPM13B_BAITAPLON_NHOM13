@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApiModel
 {
-    public class ApiCheckBalanceTransactionModel
+    public class ApiCheckBalanceTransactionModel : ApiJsonResult
     {
-        public string AccountNumber { get; set; }
-        public string PersonName { get; set; }
+        public ApiPersonModel ApiPersonModel { get; set; }
         public double AvailableBalance { get; set; }
     }
 }

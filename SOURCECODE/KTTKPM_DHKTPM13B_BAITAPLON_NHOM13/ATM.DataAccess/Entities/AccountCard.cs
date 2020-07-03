@@ -23,14 +23,17 @@ namespace Entities
             Start, Pause
         }
         [Key]
+        [RegularExpression(@"^0[0-9]{2}(1|0)[0-9]{9}$")]
         public string AccountNumber { get; set; }
 
         [Required(ErrorMessage = "Property: Code Error: The AccountType field is required.")]
+        [DefaultValue(0)]
         public AccountTypes? AccountType { get; set; }
 
         [Required]
+        [DefaultValue(typeof(DateTime),"Now")]
         public DateTime CardCreationDate { get; set; }
-
+        [Required]
         [Range(0, Double.MaxValue, ErrorMessage = "Property: Code Error:The AvailableBalance field is required.")]
         public double AvailableBalance { get; set; }
 

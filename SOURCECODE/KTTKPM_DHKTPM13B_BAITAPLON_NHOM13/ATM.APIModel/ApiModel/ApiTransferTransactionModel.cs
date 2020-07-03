@@ -8,11 +8,10 @@ namespace ApiModel
 {
     public class ApiTransferTransactionModel : ApiJsonResult
     {
-        public string PersonNameTransfer { get; set; }
-        public string PersonNameReceiver { get; set; }
+        public ApiPersonModel ApiPersonModelTransfer { get; set; }
+        public ApiPersonModel ApiPersonModelReceiver { get; set; }
         public double TransactionMoney { get; set; }
         public double AvailableBalance { get; set; }
-        public string BeneficiaryCard { get; set; }
         public double TransferFee { get; set; }
     }
 }

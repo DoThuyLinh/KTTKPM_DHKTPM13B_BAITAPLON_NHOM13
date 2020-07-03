@@ -10,9 +10,9 @@ namespace DataAccess
 {
     public class AtmDataContext:DbContext
     {
-        public AtmDataContext():base("DatabaseConnection")
+        public AtmDataContext():base("dbconnect")
         {
-
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
         public DbSet<Person> Persons { get; set; }

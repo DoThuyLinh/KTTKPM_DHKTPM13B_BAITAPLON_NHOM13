@@ -10,7 +10,7 @@ namespace ApiModel
     {
         public double AvailableBalance { get; set; }
         public double TransactionMoney { get; set; }
-        public string PersonName { get; set; }
         public double PaymentFee { get; set; }
+        public ApiPersonModel ApiPersonModel { get; set; }
     }
 }

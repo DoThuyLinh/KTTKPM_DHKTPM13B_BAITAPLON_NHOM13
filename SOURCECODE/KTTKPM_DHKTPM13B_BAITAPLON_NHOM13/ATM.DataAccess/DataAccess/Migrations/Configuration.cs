@@ -4,6 +4,7 @@
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.Validation;
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.AtmDataContext>
@@ -19,50 +20,63 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            context.Customers.Add(new Customer("Đỗ Thuỳ Linh", new DateTime(1999, 05, 21), "0967247367", "87/50 đường số 3", "dothuylinh2105@gmail.com", "A System"));
-            context.Customers.Add(new Customer("Lương Thị Thu", new DateTime(1999, 10, 19), "0348802311", "21 Nguyễn Văn Bảo", "luongthithu@gmail.com", "A System"));
-            context.Customers.Add(new Customer("Trương Đăng Quang", new DateTime(1998, 06, 26), "0334990937", "25 Tân Thới Nhất 18", "truongdangquang1998@gmail.com", "A System"));
-            context.SaveChanges();
+            context.Customers.AddOrUpdate(new Customer() { PersonID = 1, PersonName = "Đỗ Thuỳ Linh", PersonBirth = new DateTime(1999, 05, 21), PersonPhone = "0967247367", PersonAddress = "87/50 đường số 3", PersonEmail = "dothuylinh2105@gmail.com", CompanyName = "A System" });
+            context.Customers.AddOrUpdate(new Customer() { PersonID = 2, PersonName = "Lương Thị Thu", PersonBirth = new DateTime(1999, 10, 19), PersonPhone = "0348802311", PersonAddress = "21 Nguyễn Văn Bảo", PersonEmail = "luongthithu@gmail.com", CompanyName = "A System" });
+            context.Customers.AddOrUpdate(new Customer() { PersonID = 3, PersonName = "Trương Đăng Quang", PersonBirth = new DateTime(1998, 06, 26), PersonPhone = "0334990937", PersonAddress = "25 Tân Thới Nhất 18", PersonEmail = "truongdangquang1998@gmail.com", CompanyName = "A System" });
 
-            context.Staffs.Add(new Staff("Nguyễn Văn An", new DateTime(1990, 10, 22), "0332996060", "22/34 Gò Vấp", "nguyenvanan.hagl@gmail.com", Staff.Positions.Tellers));
-            context.Staffs.Add(new Staff("Nguyễn Huy Anh", new DateTime(1995, 01, 15), "0383838916", "12 đường số 5, Bình Thạnh", "nguyenhuyanh.hn@gmail.com", Staff.Positions.Admin));
-            context.Staffs.Add(new Staff("Đỗ Trung Quang", new DateTime(1993, 07, 19), "0926189299", "21/12/1 Tân Bình", "dotrungquang.tqn@gmail.com", Staff.Positions.Tellers));
-            context.SaveChanges();
+            context.Staffs.AddOrUpdate(new Staff() { PersonID = 4, PersonName = "Nguyễn Văn An", PersonBirth = new DateTime(1990, 10, 22), PersonPhone = "0332996060", PersonAddress = "22/34 Gò Vấp", PersonEmail = "nguyenvanan.hagl@gmail.com", Position = Staff.Positions.Tellers });
+            context.Staffs.AddOrUpdate(new Staff() { PersonID = 5, PersonName = "Nguyễn Huy Anh", PersonBirth = new DateTime(1995, 01, 15), PersonPhone = "0383838916", PersonAddress = "12 đường số 5, Bình Thạnh", PersonEmail = "nguyenhuyanh.hn@gmail.com", Position = Staff.Positions.Admin });
+            context.Staffs.AddOrUpdate(new Staff() { PersonID = 6, PersonName = "Đỗ Trung Quang", PersonBirth = new DateTime(1993, 07, 19), PersonPhone = "0926189299", PersonAddress = "21/12/1 Tân Bình", PersonEmail = "dotrungquang.tqn@gmail.com", Position = Staff.Positions.Tellers });
 
-            context.BankInfos.Add(new BankInfo("Vietcombank Tân Bình", "25 Tây Thạnh"));
-            context.BankInfos.Add(new BankInfo("Agribank Gò Vấp", "11 Nguyễn Văn Bảo"));
-            context.BankInfos.Add(new BankInfo("VIB Tân Bình", "56 Cộng Hoà"));
-            context.SaveChanges();
+            context.BankInfos.AddOrUpdate(new BankInfo() { BankID = 1, BankName = "Vietcombank Tân Bình", BankAddress = "25 Tây Thạnh" });
+            context.BankInfos.AddOrUpdate(new BankInfo() { BankID = 2, BankName = "Agribank Gò Vấp", BankAddress = "11 Nguyễn Văn Bảo" });
+            context.BankInfos.AddOrUpdate(new BankInfo() { BankID = 3, BankName = "VIB Tân Bình", BankAddress = "56 Cộng Hoà" });
 
-            context.ATMInfos.Add(new ATMInfo("AGR 01 Nguyễn Văn Bảo", "11 Nguyễn Văn Bảo", 2500000000, 2));
-            context.ATMInfos.Add(new ATMInfo("VCB 02 Tây Thạnh", "25 Tây Thạnh", 500000000, 1));
-            context.ATMInfos.Add(new ATMInfo("VIB 03 Quang Trung", "255 Quang Trung", 150000000, 3));
-            context.SaveChanges();
+            context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 1, ATMName = "AGR 01 Nguyễn Văn Bảo", ATMAddress = "11 Nguyễn Văn Bảo", ATMBalance = 2500000000, BankID = 2 });
+            context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 2, ATMName = "VCB 02 Tây Thạnh", ATMAddress = "25 Tây Thạnh", ATMBalance = 500000000, BankID = 1 });
+            context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 3, ATMName = "VIB 03 Quang Trung", ATMAddress = "255 Quang Trung", ATMBalance = 150000000, BankID = 3 });
 
-            context.ATMHistories.Add(new ATMHistory(DateTime.Now, 1));
-            context.ATMHistories.Add(new ATMHistory(DateTime.Now, 2));
-            context.ATMHistories.Add(new ATMHistory(DateTime.Now, 3));
-            context.SaveChanges();
+            context.ATMHistories.AddOrUpdate(new ATMHistory() { ATMHistoryTime = DateTime.Now, ATMID = 1 });
+            context.ATMHistories.AddOrUpdate(new ATMHistory() { ATMHistoryTime = DateTime.Now, ATMID = 2 });
+            context.ATMHistories.AddOrUpdate(new ATMHistory() { ATMHistoryTime = DateTime.Now, ATMID = 3 });
 
-            context.AccountCards.Add(new AccountCard("0711000000001", AccountCard.AccountTypes.Visa, DateTime.Now, 200000, 3300, 1100, AccountCard.AccountRole.customer, AccountCard.AccountStatus.Start, 1, 1));
-            context.AccountCards.Add(new AccountCard("0710000000002", AccountCard.AccountTypes.Normal, DateTime.Now, 5000000, 3300, 1100, AccountCard.AccountRole.customer, AccountCard.AccountStatus.Start, 2, 2));
-            context.AccountCards.Add(new AccountCard("0711000000003", AccountCard.AccountTypes.Visa, DateTime.Now, 100000000, 3300, 1100, AccountCard.AccountRole.staff, AccountCard.AccountStatus.Start, 3, 3));
-            context.SaveChanges();
+            context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0711000000001", AccountType = AccountCard.AccountTypes.Visa, CardCreationDate = DateTime.Now, AvailableBalance = 200000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.customer, Status = AccountCard.AccountStatus.Start, BankID = 1, PersonID = 1 });
+            context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0710000000002", AccountType = AccountCard.AccountTypes.Normal, CardCreationDate = DateTime.Now, AvailableBalance = 5000000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.customer, Status = AccountCard.AccountStatus.Start, BankID = 2, PersonID = 2 });
+            context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0711000000003", AccountType = AccountCard.AccountTypes.Visa, CardCreationDate = DateTime.Now, AvailableBalance = 100000000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.staff, Status = AccountCard.AccountStatus.Start, BankID = 3, PersonID = 3 });
 
-            context.UserLogins.Add(new UserLogin("0711000000001", "111111"));
-            context.UserLogins.Add(new UserLogin("0710000000002", "222222"));
-            context.UserLogins.Add(new UserLogin("0711000000003", "333333"));
-            context.SaveChanges();
+            context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0711000000001", Password = "111111" });
+            context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0710000000002", Password = "222222" });
+            context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0711000000003", Password = "333333" });
 
-            context.AccountHistories.Add(new AccountHistory(DateTime.Now, "0711000000001"));
-            context.AccountHistories.Add(new AccountHistory(DateTime.Now, "0710000000002"));
-            context.AccountHistories.Add(new AccountHistory(DateTime.Now, "0711000000003"));
-            context.SaveChanges();
+            context.AccountHistories.AddOrUpdate(new AccountHistory() { AccountHistoryTime = DateTime.Now, AccountNumber = "0711000000001" });
+            context.AccountHistories.AddOrUpdate(new AccountHistory() { AccountHistoryTime = DateTime.Now, AccountNumber = "0710000000002" });
+            context.AccountHistories.AddOrUpdate(new AccountHistory() { AccountHistoryTime = DateTime.Now, AccountNumber = "0711000000003" });
 
-            context.ATMTransactions.Add(new ATMTransaction(12000000, DateTime.Now, ATMTransaction.TransactionTypes.Payment, "0711000000001", "0711000000001", 1));
-            context.ATMTransactions.Add(new ATMTransaction(2000000, DateTime.Now, ATMTransaction.TransactionTypes.Withdrawl, "0710000000002", "0710000000002", 2));
-            context.ATMTransactions.Add(new ATMTransaction(5000000, DateTime.Now, ATMTransaction.TransactionTypes.Transfer, "0711000000001", "0711000000003", 3));
-            context.SaveChanges();
+            context.ATMTransactions.AddOrUpdate(new ATMTransaction() { TransactionMoney = 12000000, TransactionTime = DateTime.Now, TransactionType = ATMTransaction.TransactionTypes.Payment, BeneficiaryCard = "0711000000001", AccountNumber = "0711000000001", ATMID = 1 });
+            context.ATMTransactions.AddOrUpdate(new ATMTransaction() { TransactionMoney = 2000000, TransactionTime = DateTime.Now, TransactionType = ATMTransaction.TransactionTypes.Withdrawl, BeneficiaryCard = "0710000000002", AccountNumber = "0710000000002", ATMID = 2 });
+            context.ATMTransactions.AddOrUpdate(new ATMTransaction() { TransactionMoney = 5000000, TransactionTime = DateTime.Now, TransactionType = ATMTransaction.TransactionTypes.Transfer, BeneficiaryCard = "0711000000001", AccountNumber = "0711000000003", ATMID = 3 });
+
+            try
+            {
+                // Your code...
+                // Could also be before try if you know the exception occurs in SaveChanges
+
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
     }
 }
