@@ -1,5 +1,7 @@
 ﻿using ApiModel;
-using BusinessLogic;
+using BusinessLogic.BLL;
+using DataAccess;
+using Entities;
 using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
@@ -12,17 +14,21 @@ namespace WebApi.Controllers
 {
     public class LoginController : ApiController
     {
-        private UserLoginBLL _userLoginBLL = new UserLoginBLL();
+        private UserLoginBLL _bllUserLogin;
+        public LoginController()
+        {
+            _bllUserLogin = new UserLoginBLL();
+        }
         [Route("Login")]
         [SwaggerResponse(200, "Returns detail login", typeof(ApiUserLoginModel))]
         [SwaggerResponse(500, "Internal Server Error")]
         [SwaggerResponse(400, "Bad Request")]
         [SwaggerResponse(401, "Not Authorizated")]
         [HttpGet]
-        public IHttpActionResult Login(string account, string pass,int atmId)
+        public IHttpActionResult Login(string account, string pass, int atmId)
         {
-            var repose = _userLoginBLL.Login(account, pass, atmId);
-            return new HttpApiActionResult(HttpStatusCode.OK, repose);
+            var repose = _bllUserLogin.UserLogin(account, pass, atmId);
+            return new HttpApiActionResult(HttpStatusCode.OK,repose);
         }
     }
 }

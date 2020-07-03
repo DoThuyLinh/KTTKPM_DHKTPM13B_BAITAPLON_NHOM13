@@ -17,7 +17,7 @@ namespace Entities
 
         [Required(ErrorMessage = "Property: Code Error: The ATMAddress field is required.")]
         public string ATMAddress { get; set; }
-
+        [Required]
         [Range(0, Double.MaxValue, ErrorMessage = "Property: Code Error: The ATMBalance field is required.")]
         public double ATMBalance { get; set; }
 
@@ -27,7 +27,10 @@ namespace Entities
 
         public virtual ICollection<ATMHistory> ATMHistories { get; set; }
         public virtual ICollection<ATMTransaction> ATMTransactions { get; set; }
+        public ATMInfo()
+        {
 
+        }
         public ATMInfo(string atmName, string atmAddress, double atmBalance, int bankID)
         {
             this.ATMName = atmName;
