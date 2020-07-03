@@ -1,5 +1,4 @@
-﻿using ApiModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +14,7 @@ namespace DataAccess
         protected AccountCardDAL _accountCardDAL;
         protected AtmTransactionDAL _atmTransactionDAL;
         protected UserLoginDAL _userLoginDAL;
+        protected ATMInfoDAL _atmInfoDAL;
         public DataContextBLO()
         {
             _dbContext = new AtmDataContext();
@@ -23,6 +23,7 @@ namespace DataAccess
             _accountCardDAL = new AccountCardDAL();
             _atmTransactionDAL = new AtmTransactionDAL();
             _userLoginDAL = new UserLoginDAL();
+            _atmInfoDAL = new ATMInfoDAL();
         }
     }
 }

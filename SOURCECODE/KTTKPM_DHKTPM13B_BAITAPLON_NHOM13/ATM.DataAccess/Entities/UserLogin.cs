@@ -14,8 +14,8 @@ namespace Entities
         [Key,Column(Order = 1)]
         public string AccountNumber { get; set; }
         public AccountCard AccountCard { get; set; }
-
-        [RegularExpression("^\\d{6}$", ErrorMessage = "Must be 6 characters")]
+        [Required]
+        [RegularExpression(@"^\d{6}$", ErrorMessage = "Must be 6 characters")]
         public string Password { get; set; }
         [DefaultValue(0)]
         public int CountPassword { get; set; }

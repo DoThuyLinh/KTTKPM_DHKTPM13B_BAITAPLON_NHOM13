@@ -16,26 +16,25 @@ namespace Entities
         }
         [Key]
         public int TransactionID { get; set; }
-
+        [Required]
         [Range(0, Double.MaxValue, ErrorMessage = "Property: Code Error: The TransactionMoney field is required.")]
         public double TransactionMoney { get; set; }
-
+        [DefaultValue(typeof(DateTime), "Now")]
         [Required(ErrorMessage = "Property: Code Error: The TransactionTime field is required.")]
         public DateTime TransactionTime { get; set; }
 
         [Required(ErrorMessage = "Property: Code Error: The TransactionType field is required.")]
         public TransactionTypes? TransactionType { get; set; }
-
-        [RegularExpression("^\\d{13}$", ErrorMessage = "Property: Code Error: The BeneficiaryCard field is required.")]
+        [RegularExpression(@"^0[0-9]{2}(1|0)[0-9]{9}$", ErrorMessage = "Property: Code Error: The BeneficiaryCard field is required.")]
         public string BeneficiaryCard { get; set; }
 
         [Required]
         public string AccountNumber { get; set; }
-        public UserLogin UserLogin { get; set; }
+        public virtual UserLogin UserLogin { get; set; }
 
         [Required]
         public int ATMID { get; set; }
-        public ATMInfo ATMInfo { get; set; }
+        public virtual ATMInfo ATMInfo { get; set; }
 
         public ATMTransaction(double transactionMoney, DateTime transactionTime, TransactionTypes? transactionType, string beneficiaryCard, string accountNumber, int atmId)
         {
@@ -45,6 +44,10 @@ namespace Entities
             this.BeneficiaryCard = beneficiaryCard;
             this.AccountNumber = accountNumber;
             this.ATMID = atmId;
+        }
+        public ATMTransaction()
+        {
+
         }
     }
 }

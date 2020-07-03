@@ -12,8 +12,17 @@ namespace ApiModel
         {
             Customer, Staff
         }
-        public string AccountNumber { get; set; }
-        public string PersonName { get; set; }
+        public ApiPersonModel ApiPersonModel { get; set; }
         public AccountRole? Role { get; set; }
+        public ApiUserLoginModel()
+        {
+
+        }
+        public ApiUserLoginModel(ApiPersonModel person, AccountRole role)
+        {
+            ApiPersonModel.AccountNumber = person.AccountNumber;
+            ApiPersonModel.PersonName = person.PersonName;
+            Role = role;
+        }
     }
 }

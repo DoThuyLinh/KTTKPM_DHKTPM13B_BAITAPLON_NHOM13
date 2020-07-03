@@ -51,24 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityDAL\AccountCardDAL.cs" />
-    <Compile Include="EntityDAL\AddHistoryDAL.cs" />
     <Compile Include="DataContext\AtmDataContext.cs" />
-    <Compile Include="EntityDAL\AtmTransactionDAL.cs" />
-    <Compile Include="DataContext\DataContextBLO.cs" />
-    <Compile Include="Migrations\202006280928587_Initial.cs" />
-    <Compile Include="Migrations\202006280928587_Initial.designer.cs">
-      <DependentUpon>202006280928587_Initial.cs</DependentUpon>
+    <Compile Include="EntityDAL\INewDataAccessBase.cs" />
+    <Compile Include="EntityDAL\IDataAccess.cs" />
+    <Compile Include="EntityDAL\DataAccess.cs" />
+    <Compile Include="Migrations\202007030706389_ATM.cs" />
+    <Compile Include="Migrations\202007030706389_ATM.designer.cs">
+      <DependentUpon>202007030706389_ATM.cs</DependentUpon>
     </Compile>
-    <Compile Include="TransactionDAL\ChangePinTransactionDAL.cs" />
-    <Compile Include="TransactionDAL\CheckBalanceTransactionDAL.cs" />
-    <Compile Include="TransactionDAL\PaymentTransactionDAL.cs" />
-    <Compile Include="EntityDAL\PersonDAL.cs" />
-    <Compile Include="TransactionDAL\TransferTransactionDAL.cs" />
-    <Compile Include="EntityDAL\UserLoginDAL.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TransactionDAL\WithdrawlTransactionDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -85,11 +77,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006280928587_Initial.resx">
-      <DependentUpon>202006280928587_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007030706389_ATM.resx">
+      <DependentUpon>202007030706389_ATM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Entities
         [Key]
         public int ATMHistoryID { get; set; }
         [Required]
+        [DefaultValue(typeof(DateTime), "Now")]
         public DateTime ATMHistoryTime { get; set; }
         [Required]
         public int ATMID { get; set; }
@@ -21,6 +23,10 @@ namespace Entities
         {
             this.ATMHistoryTime = atmHistoryTime;
             this.ATMID = atmId;
+        }
+        public ATMHistory()
+        {
+
         }
     }
 }
