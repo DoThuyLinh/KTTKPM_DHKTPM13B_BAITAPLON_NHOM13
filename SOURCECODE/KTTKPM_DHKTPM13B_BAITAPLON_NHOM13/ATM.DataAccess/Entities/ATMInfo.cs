@@ -18,7 +18,7 @@ namespace Entities
         [Required(ErrorMessage = "Property: Code Error: The ATMAddress field is required.")]
         public string ATMAddress { get; set; }
         [Required]
-        [Range(0, Double.MaxValue, ErrorMessage = "Property: Code Error: The ATMBalance field is required.")]
+        [Range(0, 500000000, ErrorMessage = "Property: Code Error: The ATMBalance field is required.")]
         public double ATMBalance { get; set; }
 
         [Required]

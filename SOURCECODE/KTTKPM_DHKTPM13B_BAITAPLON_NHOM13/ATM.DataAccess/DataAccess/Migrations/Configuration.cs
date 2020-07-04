@@ -32,9 +32,9 @@
             context.BankInfos.AddOrUpdate(new BankInfo() { BankID = 2, BankName = "Agribank Gò Vấp", BankAddress = "11 Nguyễn Văn Bảo" });
             context.BankInfos.AddOrUpdate(new BankInfo() { BankID = 3, BankName = "VIB Tân Bình", BankAddress = "56 Cộng Hoà" });
 
-            context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 1, ATMName = "AGR 01 Nguyễn Văn Bảo", ATMAddress = "11 Nguyễn Văn Bảo", ATMBalance = 2500000000, BankID = 2 });
+            context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 1, ATMName = "AGR 01 Nguyễn Văn Bảo", ATMAddress = "11 Nguyễn Văn Bảo", ATMBalance = 500000000, BankID = 2 });
             context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 2, ATMName = "VCB 02 Tây Thạnh", ATMAddress = "25 Tây Thạnh", ATMBalance = 500000000, BankID = 1 });
-            context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 3, ATMName = "VIB 03 Quang Trung", ATMAddress = "255 Quang Trung", ATMBalance = 150000000, BankID = 3 });
+            context.ATMInfos.AddOrUpdate(new ATMInfo() { ATMID = 3, ATMName = "VIB 03 Quang Trung", ATMAddress = "255 Quang Trung", ATMBalance = 475750000, BankID = 3 });
 
             context.ATMHistories.AddOrUpdate(new ATMHistory() { ATMHistoryTime = DateTime.Now, ATMID = 1 });
             context.ATMHistories.AddOrUpdate(new ATMHistory() { ATMHistoryTime = DateTime.Now, ATMID = 2 });
