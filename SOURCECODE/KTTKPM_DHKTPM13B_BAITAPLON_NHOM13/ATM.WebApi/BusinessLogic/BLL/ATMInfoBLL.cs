@@ -20,7 +20,7 @@ namespace BusinessLogic.BLL
             ATMInfo info = _atmInfo.GetById(atmID);
             try
             {
-                if (info != null)
+                if (info.ATMBalance > transactionMoney+1000000)
                 {
                     double balance = info.ATMBalance - transactionMoney;
                     info.ATMBalance = balance;

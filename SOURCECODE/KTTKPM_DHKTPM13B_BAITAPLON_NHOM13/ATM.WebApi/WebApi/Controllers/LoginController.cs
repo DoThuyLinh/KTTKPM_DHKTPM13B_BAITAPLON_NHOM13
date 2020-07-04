@@ -14,7 +14,7 @@ namespace WebApi.Controllers
 {
     public class LoginController : ApiController
     {
-        private UserLoginBLL _bllUserLogin;
+        private readonly UserLoginBLL _bllUserLogin;
         public LoginController()
         {
             _bllUserLogin = new UserLoginBLL();

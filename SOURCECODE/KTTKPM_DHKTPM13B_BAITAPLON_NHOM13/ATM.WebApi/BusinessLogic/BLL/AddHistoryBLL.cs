@@ -11,29 +11,29 @@ namespace BusinessLogic.BLL
 {
     public class AddHistoryBLL
     {
-        private DataAccess<ATMHistory> _atmHistory;
-        private DataAccess<AccountHistory> _accountHistory;
+        private readonly DataAccess<ATMHistory> _atmHistory;
+        private readonly DataAccess<AccountHistory> _accountHistory;
         public AddHistoryBLL()
         {
             _atmHistory = new DataAccess<ATMHistory>();
             _accountHistory = new DataAccess<AccountHistory>();
         }
-        public bool AddATMHistory(int atmID)
+        public ATMHistory AddATMHistory(int atmID)
         {
             ATMHistory history = new ATMHistory(DateTime.Now, atmID);
             try
             {
                 _atmHistory.Add(history);
-                return true;
+                return history;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
-        public bool AddAccountHistory(string acc)
+        public bool AddAccountHistory(string acc, DateTime dateTime)
         {
-            AccountHistory history = new AccountHistory(DateTime.Now, acc);
+            AccountHistory history = new AccountHistory(dateTime, acc);
             try
             {
                 _accountHistory.Add(history);

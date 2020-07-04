@@ -20,13 +20,13 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            context.Customers.AddOrUpdate(new Customer() { PersonID = 1, PersonName = "Đỗ Thuỳ Linh", PersonBirth = new DateTime(1999, 05, 21), PersonPhone = "0967247367", PersonAddress = "87/50 đường số 3", PersonEmail = "dothuylinh2105@gmail.com", CompanyName = "A System" });
-            context.Customers.AddOrUpdate(new Customer() { PersonID = 2, PersonName = "Lương Thị Thu", PersonBirth = new DateTime(1999, 10, 19), PersonPhone = "0348802311", PersonAddress = "21 Nguyễn Văn Bảo", PersonEmail = "luongthithu@gmail.com", CompanyName = "A System" });
-            context.Customers.AddOrUpdate(new Customer() { PersonID = 3, PersonName = "Trương Đăng Quang", PersonBirth = new DateTime(1998, 06, 26), PersonPhone = "0334990937", PersonAddress = "25 Tân Thới Nhất 18", PersonEmail = "truongdangquang1998@gmail.com", CompanyName = "A System" });
+            context.Customers.AddOrUpdate(new Customer() { PersonID = 1, PersonName = "Đỗ Thuỳ Linh", PersonBirth = new DateTime(1999, 05, 21), IdCard ="035199000001", PersonPhone = "0967247367", PersonAddress = "87/50 đường số 3", PersonEmail = "dothuylinh2105@gmail.com", CompanyName = "A System" });
+            context.Customers.AddOrUpdate(new Customer() { PersonID = 2, PersonName = "Lương Thị Thu", PersonBirth = new DateTime(1999, 10, 19), IdCard = "035199000002", PersonPhone = "0348802311", PersonAddress = "21 Nguyễn Văn Bảo", PersonEmail = "luongthithu@gmail.com", CompanyName = "A System" });
+            context.Customers.AddOrUpdate(new Customer() { PersonID = 3, PersonName = "Trương Đăng Quang", PersonBirth = new DateTime(1998, 06, 26), IdCard = "035199000003", PersonPhone = "0334990937", PersonAddress = "25 Tân Thới Nhất 18", PersonEmail = "truongdangquang1998@gmail.com", CompanyName = "A System" });
 
-            context.Staffs.AddOrUpdate(new Staff() { PersonID = 4, PersonName = "Nguyễn Văn An", PersonBirth = new DateTime(1990, 10, 22), PersonPhone = "0332996060", PersonAddress = "22/34 Gò Vấp", PersonEmail = "nguyenvanan.hagl@gmail.com", Position = Staff.Positions.Tellers });
-            context.Staffs.AddOrUpdate(new Staff() { PersonID = 5, PersonName = "Nguyễn Huy Anh", PersonBirth = new DateTime(1995, 01, 15), PersonPhone = "0383838916", PersonAddress = "12 đường số 5, Bình Thạnh", PersonEmail = "nguyenhuyanh.hn@gmail.com", Position = Staff.Positions.Admin });
-            context.Staffs.AddOrUpdate(new Staff() { PersonID = 6, PersonName = "Đỗ Trung Quang", PersonBirth = new DateTime(1993, 07, 19), PersonPhone = "0926189299", PersonAddress = "21/12/1 Tân Bình", PersonEmail = "dotrungquang.tqn@gmail.com", Position = Staff.Positions.Tellers });
+            context.Staffs.AddOrUpdate(new Staff() { PersonID = 4, PersonName = "Nguyễn Văn An", PersonBirth = new DateTime(1990, 10, 22), IdCard = "035199000004", PersonPhone = "0332996060", PersonAddress = "22/34 Gò Vấp", PersonEmail = "nguyenvanan.hagl@gmail.com", Position = Staff.Positions.Tellers });
+            context.Staffs.AddOrUpdate(new Staff() { PersonID = 5, PersonName = "Nguyễn Huy Anh", PersonBirth = new DateTime(1995, 01, 15), IdCard = "035199000005", PersonPhone = "0383838916", PersonAddress = "12 đường số 5, Bình Thạnh", PersonEmail = "nguyenhuyanh.hn@gmail.com", Position = Staff.Positions.Admin });
+            context.Staffs.AddOrUpdate(new Staff() { PersonID = 6, PersonName = "Đỗ Trung Quang", PersonBirth = new DateTime(1993, 07, 19), IdCard = "035199000006", PersonPhone = "0926189299", PersonAddress = "21/12/1 Tân Bình", PersonEmail = "dotrungquang.tqn@gmail.com", Position = Staff.Positions.Tellers });
 
             context.BankInfos.AddOrUpdate(new BankInfo() { BankID = 1, BankName = "Vietcombank Tân Bình", BankAddress = "25 Tây Thạnh" });
             context.BankInfos.AddOrUpdate(new BankInfo() { BankID = 2, BankName = "Agribank Gò Vấp", BankAddress = "11 Nguyễn Văn Bảo" });
@@ -43,10 +43,16 @@
             context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0711000000001", AccountType = AccountCard.AccountTypes.Visa, CardCreationDate = DateTime.Now, AvailableBalance = 200000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.customer, Status = AccountCard.AccountStatus.Start, BankID = 1, PersonID = 1 });
             context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0710000000002", AccountType = AccountCard.AccountTypes.Normal, CardCreationDate = DateTime.Now, AvailableBalance = 5000000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.customer, Status = AccountCard.AccountStatus.Start, BankID = 2, PersonID = 2 });
             context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0711000000003", AccountType = AccountCard.AccountTypes.Visa, CardCreationDate = DateTime.Now, AvailableBalance = 100000000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.staff, Status = AccountCard.AccountStatus.Start, BankID = 3, PersonID = 3 });
+            context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0711000000004", AccountType = AccountCard.AccountTypes.Visa, CardCreationDate = DateTime.Now, AvailableBalance = 10000000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.customer, Status = AccountCard.AccountStatus.Start, BankID = 1, PersonID = 4 });
+            context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0710000000005", AccountType = AccountCard.AccountTypes.Normal, CardCreationDate = DateTime.Now, AvailableBalance = 300000000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.customer, Status = AccountCard.AccountStatus.Start, BankID = 2, PersonID = 5 });
+            context.AccountCards.AddOrUpdate(new AccountCard() { AccountNumber = "0711000000006", AccountType = AccountCard.AccountTypes.Visa, CardCreationDate = DateTime.Now, AvailableBalance = 100000000, ForeignFee = 3300, InternalFee = 1100, Role = AccountCard.AccountRole.staff, Status = AccountCard.AccountStatus.Start, BankID = 3, PersonID = 6 });
 
             context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0711000000001", Password = "111111" });
             context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0710000000002", Password = "222222" });
             context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0711000000003", Password = "333333" });
+            context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0711000000004", Password = "111111" });
+            context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0710000000005", Password = "222222" });
+            context.UserLogins.AddOrUpdate(new UserLogin() { AccountNumber = "0711000000006", Password = "333333" });
 
             context.AccountHistories.AddOrUpdate(new AccountHistory() { AccountHistoryTime = DateTime.Now, AccountNumber = "0711000000001" });
             context.AccountHistories.AddOrUpdate(new AccountHistory() { AccountHistoryTime = DateTime.Now, AccountNumber = "0710000000002" });

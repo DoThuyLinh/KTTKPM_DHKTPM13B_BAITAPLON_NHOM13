@@ -12,9 +12,9 @@ namespace BusinessLogic.TransactionBLL
 {
     public class CheckBalanceTransactionBLL
     {
-        private DataAccess<UserLogin> _userLogin;
-        private DataAccess<AccountCard> _accountCard;
-        private PersonBLL _personBLL;
+        private readonly DataAccess<UserLogin> _userLogin;
+        private readonly DataAccess<AccountCard> _accountCard;
+        private readonly PersonBLL _personBLL;
         public CheckBalanceTransactionBLL()
         {
             _userLogin = new DataAccess<UserLogin>();
@@ -23,10 +23,11 @@ namespace BusinessLogic.TransactionBLL
         }
         public ApiCheckBalanceTransactionModel CheckBalanceTransaction(string acc)
         {
+            ApiCheckBalanceTransactionModel checkBalance = new ApiCheckBalanceTransactionModel();
+
             UserLogin userLogin = _userLogin.GetByCondition(x => x.AccountNumber.Equals(acc));
             AccountCard accountCard = _accountCard.GetByCondition(x => x.AccountNumber.Equals(userLogin.AccountNumber));
 
-            var checkBalance = new ApiCheckBalanceTransactionModel();
             checkBalance.ApiPersonModel = _personBLL.PersonInfo(accountCard);
             checkBalance.AvailableBalance = accountCard.AvailableBalance;
             try
@@ -36,11 +37,11 @@ namespace BusinessLogic.TransactionBLL
                     return checkBalance;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                checkBalance.ErrorMessages = new List<string> {ex.ToString(),"Lỗi hệ thống." };
             }
-            return null;
+            return checkBalance;
         }
     }
 }

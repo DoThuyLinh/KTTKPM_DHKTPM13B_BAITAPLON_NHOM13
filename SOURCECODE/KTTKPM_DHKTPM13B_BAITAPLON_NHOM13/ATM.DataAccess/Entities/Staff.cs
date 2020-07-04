@@ -15,10 +15,11 @@ namespace Entities
         }
         [Required(ErrorMessage = "Property: Code Error: The PersonBirth field is required.")]
         public Positions? Position { get; set; }
-        public Staff(string personName, DateTime personBirth, string personPhone, string personAddress, string personEmail, Positions? position)
+        public Staff(string personName, DateTime personBirth,string idCard, string personPhone, string personAddress, string personEmail, Positions? position)
         {
             this.PersonName = personName;
             this.PersonBirth = personBirth;
+            this.IdCard = idCard;
             this.PersonPhone = personPhone;
             this.PersonAddress = personAddress;
             this.PersonEmail = personEmail;
