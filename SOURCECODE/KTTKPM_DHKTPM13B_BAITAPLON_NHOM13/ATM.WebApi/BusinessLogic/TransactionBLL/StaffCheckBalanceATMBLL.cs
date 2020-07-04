@@ -21,7 +21,15 @@ namespace BusinessLogic.TransactionBLL
         {
             ApiStaffCheckBalanceATMModel balanceATMModel = new ApiStaffCheckBalanceATMModel();
             ATMInfo info = _atmInfo.GetByCondition(x => x.ATMID == atmID);
-            balanceATMModel.AvailableBalanceATM = info.ATMBalance;
+            if(info != null)
+            {
+                balanceATMModel.AvailableBalanceATM = info.ATMBalance;
+                return balanceATMModel;
+            }
+            else
+            {
+                balanceATMModel.ErrorMessages = new List<string> { "ATM không tồn tại." };
+            }
             return balanceATMModel;
         }
     }

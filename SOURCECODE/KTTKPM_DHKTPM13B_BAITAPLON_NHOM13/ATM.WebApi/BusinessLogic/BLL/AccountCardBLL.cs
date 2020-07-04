@@ -15,7 +15,7 @@ namespace BusinessLogic.BLL
         {
             _accountCard = new DataAccess<AccountCard>();
         }
-        public bool UpdateBalanceAccount(AccountCard account, double transMoney)
+        public AccountCard UpdateBalanceAccount(AccountCard account, double transMoney)
         {
             try
             {
@@ -27,18 +27,18 @@ namespace BusinessLogic.BLL
                     {
                         accountcard.AvailableBalance = balance;
                         _accountCard.Update(accountcard);
-                        return true;
+                        return accountcard;
                     }
                 }
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
 
-        public bool UpdateBalanceAccountPayment(AccountCard account, double paymentMoney)
+        public AccountCard UpdateBalanceAccountPayment(AccountCard account, double paymentMoney)
         {
             try
             {
@@ -48,14 +48,14 @@ namespace BusinessLogic.BLL
                     double balance = accountcard.AvailableBalance + paymentMoney;
                     accountcard.AvailableBalance = balance;
                     _accountCard.Update(accountcard);
-                    return true;
+                    return accountcard;
                 }
             }
             catch (Exception)
             {
-                return false;
+                return null ;
             }
-            return false;
+            return null;
         }
     }
 }

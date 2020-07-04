@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiModel
 {
-    public class ApiStaffTransactionStatisticsModel
+    public class ApiStaffTransactionStatisticsCustomerModel
     {
         public enum TransactionTypes
         {
@@ -19,8 +19,8 @@ namespace ApiModel
         public string TransactionType { get; set; }
         public ApiPersonModel ApiPersonModel { get; set; }
     }
-    public class ListApiStaffTransactionStatisticsModel:ApiJsonResult
+    public class ListApiStaffTransactionStatisticsCustomerModel:ApiJsonResult
     {
-        public IEnumerable<ApiStaffTransactionStatisticsModel> StaffTransactionStatisticsModels { get; set; }
+        public IEnumerable<ApiStaffTransactionStatisticsCustomerModel> StaffTransactionStatisticsModels { get; set; }
     }
 }

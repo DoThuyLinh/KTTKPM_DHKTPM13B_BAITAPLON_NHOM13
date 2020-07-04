@@ -15,48 +15,65 @@ namespace BusinessLogic.TransactionBLL
     {
         private readonly DataAccess<ATMHistory> _atmHistory;
         private readonly DataAccess<ATMTransaction> _atmTransaction;
+        private readonly DataAccess<Person> _person;
 
-        //private readonly DataAccess<UserLogin> _userLogin;
-        //private readonly DataAccess<AccountCard> _accountCard;
-        //private readonly DataAccess<ATMInfo> _atmInfo;
-        //private readonly DataAccess<BankInfo> _bankInfo;
-
-        //private readonly PersonBLL _personBLL;
-        //private readonly AccountCardBLL _accountCardBLL;
-        //private readonly AddHistoryBLL _addHistoryBLL;
-        //private readonly AtmTransactionBLL _atmTransactionBLL;
+        private readonly DataAccess<AccountCard> _accountCard;
+        private readonly DataAccess<ATMInfo> _atmInfo;
+        
         public StaffTransactionStatisticsBLL()
         {
             _atmHistory = new DataAccess<ATMHistory>();
             _atmTransaction = new DataAccess<ATMTransaction>();
+            _person = new DataAccess<Person>();
 
-            //_userLogin = new DataAccess<UserLogin>();
-            //_accountCard = new DataAccess<AccountCard>();
-            //_atmInfo = new DataAccess<ATMInfo>();
-            //_bankInfo = new DataAccess<BankInfo>();
-            //_personBLL = new PersonBLL();
-            //_accountCardBLL = new AccountCardBLL();
-            //_addHistoryBLL = new AddHistoryBLL();
-            //_atmTransactionBLL = new AtmTransactionBLL();
+            _accountCard = new DataAccess<AccountCard>();
+            _atmInfo = new DataAccess<ATMInfo>();
         }
 
-        public List<ApiStaffTransactionStatisticsModel> StaffTransactionStatistics(int atmID)
+        public ListApiStaffTransactionStatisticsCustomerModel StaffTransactionStatistics(int atmId)
         {
-            List<ApiStaffTransactionStatisticsModel> listStatistics = new List<ApiStaffTransactionStatisticsModel>();
-            List<ATMHistory> atmHistories = _atmHistory.GetByWhere(x => x.ATMID == atmID).ToList();
-            List<ATMTransaction> atmTransactions = _atmTransaction.GetByWhere(x => x.ATMID == atmID).ToList();
-            List<DateTime> histories = new List<DateTime>();
-            List<double> transactions = new List<double>();
-            foreach (var item in atmHistories)
+            ListApiStaffTransactionStatisticsCustomerModel listApiStaffTransaction = new ListApiStaffTransactionStatisticsCustomerModel();
+            List<ApiStaffTransactionStatisticsCustomerModel> statisticsModels = new List<ApiStaffTransactionStatisticsCustomerModel>();
+            ATMInfo info = _atmInfo.GetById(atmId);
+            List<ATMHistory> aTMHistories = _atmHistory.GetByWhere(x => x.ATMID == atmId).ToList();
+            List<ATMTransaction> aTMTransactions = new List<ATMTransaction>();
+
+            foreach (var item in aTMHistories)
             {
-                histories.Add(item.ATMHistoryTime);
+                ATMTransaction transaction = _atmTransaction.GetByCondition(x => x.ATMID == info.ATMID && x.TransactionTime == item.ATMHistoryTime);
+                if (transaction !=null)
+                    aTMTransactions.Add(transaction);
             }
-            foreach (var statistics in atmTransactions)
+            if (aTMHistories.Count!=0 && aTMTransactions.Count !=0)
             {
-                transactions.Add(statistics.TransactionMoney);
-                
+                foreach (var item in aTMHistories)
+                {
+                    foreach (var trans in aTMTransactions)
+                    {
+                        if (item.ATMHistoryTime == trans.TransactionTime)
+                        {
+                            AccountCard accountCard = _accountCard.GetByCondition(x => x.AccountNumber == trans.AccountNumber);
+                            Person person = _person.GetByCondition(x => x.PersonID == accountCard.PersonID);
+
+                            statisticsModels.Add(new ApiStaffTransactionStatisticsCustomerModel()
+                            {
+                                AtmHistoryName = info.ATMName,
+                                AtmHistoryAddress = info.ATMAddress,
+                                TransactionMoney = trans.TransactionMoney,
+                                TransactionTime = trans.TransactionTime,
+                                TransactionType = trans.TransactionType.ToString(),
+                                ApiPersonModel = new ApiPersonModel(accountCard.AccountNumber, person.PersonName)
+                            });
+                        }
+                    }
+                }
+                listApiStaffTransaction.StaffTransactionStatisticsModels = statisticsModels;
+                return listApiStaffTransaction;
             }
-            return listStatistics;
+            else
+                listApiStaffTransaction.ErrorMessages = new List<string> {"Hệ thống chưa có giao dịch nào." };
+            return listApiStaffTransaction;
+            
         }
     }
 }

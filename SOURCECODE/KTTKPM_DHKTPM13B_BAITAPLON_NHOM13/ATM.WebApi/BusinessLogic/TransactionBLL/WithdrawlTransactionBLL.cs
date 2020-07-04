@@ -57,15 +57,16 @@ namespace BusinessLogic.TransactionBLL
                 }
                 try
                 {
-                    if (_atmInfoBLL.UpdateAvailableBalanceWithdrawlATM(atmID, transMoney))
+                    AccountCard balance = _accountCardBLL.UpdateBalanceAccount(accountCard, transMoney + withdrawl.WithdrawlFee);
+                    
+                    if (balance != null)
                     {
-                        _accountCardBLL.UpdateBalanceAccount(accountCard, transMoney + withdrawl.WithdrawlFee);
-
+                        _atmInfoBLL.UpdateAvailableBalanceWithdrawlATM(atmID, transMoney);
                         ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmID);
                         _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber,atmHistory.ATMHistoryTime);
                         _atmTransactionBLL.AddTransaction(accountCard.AccountNumber, transMoney,atmHistory.ATMHistoryTime, atmID);
 
-                        AccountCard balance = _accountCard.GetByCondition(x => x.AccountNumber == accountCard.AccountNumber);
+                        _accountCard.GetByCondition(x => x.AccountNumber == accountCard.AccountNumber);
                         withdrawl.AvailableBalance = balance.AvailableBalance;
                         return withdrawl;
                     }

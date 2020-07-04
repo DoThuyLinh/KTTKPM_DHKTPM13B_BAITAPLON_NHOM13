@@ -30,44 +30,54 @@ namespace BusinessLogic.BLL
             ApiUserLoginModel userloginmodel = new ApiUserLoginModel();
 
             UserLogin userLogin = _userLogin.GetByCondition(x => x.AccountNumber.Equals(acc));
-            AccountCard accountCard = _accountCard.GetByCondition(x => x.AccountNumber.Equals(userLogin.AccountNumber));
-            if (userLogin.CountPassword > 3)
+            if (userLogin != null)
             {
-                UpdateAccountStatusByCountPass(accountCard);
-                userloginmodel.ErrorMessages = new List<string> (){ "false","Tài khoản đã khoá."};
-                return userloginmodel;
-            }
-            else if (userLogin.Password.Equals(pass))
-            {
-                var person = _person.GetByCondition(x => x.PersonID == accountCard.PersonID);
-                userloginmodel.ApiPersonModel = _personBLL.PersonInfo(accountCard);
-                if (person is Staff)
+                AccountCard accountCard = _accountCard.GetByCondition(x => x.AccountNumber.Equals(userLogin.AccountNumber));
+                if(accountCard.Status == AccountCard.AccountStatus.Pause)
                 {
-                    userloginmodel.Role = ApiUserLoginModel.AccountRole.Staff;
-                }
-                else if (person is Customer)
-                {
-                    userloginmodel.Role = ApiUserLoginModel.AccountRole.Customer;
-                    userloginmodel.ApiPersonModel = new ApiPersonModel(acc, person.PersonName);
-                }
-                try
-                {
-                    ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmID);
-                    _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber,atmHistory.ATMHistoryTime);
+                    userloginmodel.ErrorMessages = new List<string> {"Tài khoản của bạn đã bị khoá." };
                     return userloginmodel;
                 }
-                catch (Exception ex)
+                else if (userLogin.CountPassword > 3)
                 {
-                    userloginmodel.ErrorMessages = new List<string> {ex.ToString(), "Đăng nhập không thành công."};
+                    UpdateAccountStatusByCountPass(accountCard);
+                    userloginmodel.ErrorMessages = new List<string>() { "false", "Tài khoản đã khoá." };
                     return userloginmodel;
+                }
+                else if (userLogin.Password.Equals(pass))
+                {
+                    var person = _person.GetByCondition(x => x.PersonID == accountCard.PersonID);
+                    userloginmodel.ApiPersonModel = _personBLL.PersonInfo(accountCard);
+                    if (person is Staff)
+                    {
+                        userloginmodel.Role = ApiUserLoginModel.AccountRole.Staff;
+                    }
+                    else if (person is Customer)
+                    {
+                        userloginmodel.Role = ApiUserLoginModel.AccountRole.Customer;
+                        userloginmodel.ApiPersonModel = new ApiPersonModel(acc, person.PersonName);
+                    }
+                    try
+                    {
+                        ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmID);
+                        _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber, atmHistory.ATMHistoryTime);
+                        return userloginmodel;
+                    }
+                    catch (Exception ex)
+                    {
+                        userloginmodel.ErrorMessages = new List<string> { ex.ToString(), "Đăng nhập không thành công." };
+                        return userloginmodel;
+                    }
+                }
+                else
+                {
+                    UpdateAccountPasswordByCountPass(userLogin);
+                    userloginmodel.ErrorMessages = new List<string> { "Mật khẩu không chính xác." };
+
                 }
             }
             else
-            {
-                UpdateAccountPasswordByCountPass(userLogin);
-                userloginmodel.ErrorMessages = new List<string> { "Mật khẩu không chính xác." };
-
-            }
+                userloginmodel.ErrorMessages = new List<string> { "Tài khoản không tồn tại." };
             return userloginmodel;
             
         }

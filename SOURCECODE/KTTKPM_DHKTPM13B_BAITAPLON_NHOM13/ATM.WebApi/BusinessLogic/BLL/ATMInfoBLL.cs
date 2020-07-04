@@ -15,7 +15,7 @@ namespace BusinessLogic.BLL
         {
             _atmInfo = new DataAccess<ATMInfo>();
         }
-        public bool UpdateAvailableBalanceWithdrawlATM(int atmID, double transactionMoney)
+        public ATMInfo UpdateAvailableBalanceWithdrawlATM(int atmID, double transactionMoney)
         {
             ATMInfo info = _atmInfo.GetById(atmID);
             try
@@ -25,17 +25,17 @@ namespace BusinessLogic.BLL
                     double balance = info.ATMBalance - transactionMoney;
                     info.ATMBalance = balance;
                     _atmInfo.Update(info);
-                    return true;
+                    return info;
                 }
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
 
-        public bool UpdateAvailableBalancePaymentATM(int atmID, double transactionMoney)
+        public ATMInfo UpdateAvailableBalancePaymentATM(int atmID, double transactionMoney)
         {
             ATMInfo info = _atmInfo.GetById(atmID);
             try
@@ -45,14 +45,14 @@ namespace BusinessLogic.BLL
                     double balance = info.ATMBalance + transactionMoney;
                     info.ATMBalance = balance;
                     _atmInfo.Update(info);
-                    return true;
+                    return info;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw;
             }
-            return false;
+            return null;
         }
     }
 }

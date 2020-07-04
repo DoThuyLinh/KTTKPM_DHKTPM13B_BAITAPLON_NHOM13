@@ -17,12 +17,14 @@ namespace WebApi.Controllers
         private readonly StaffCheckBalanceATMBLL _bllStaffCheckBalance;
         private readonly PaymentTransactionBLL _bllPaymentTransaction;
         private readonly CustomerBLL _bllCustomer;
+        private readonly StaffTransactionStatisticsBLL _bllStaffTransactionStatistics;
 
         public StaffController()
         {
             _bllStaffCheckBalance = new StaffCheckBalanceATMBLL();
             _bllPaymentTransaction = new PaymentTransactionBLL();
             _bllCustomer = new CustomerBLL();
+            _bllStaffTransactionStatistics = new StaffTransactionStatisticsBLL();
         }
         [Route("StaffCheckBalance")]
         [SwaggerResponse(200, "Returns detail payment", typeof(ApiStaffCheckBalanceATMModel))]
@@ -35,29 +37,39 @@ namespace WebApi.Controllers
             var repose = _bllStaffCheckBalance.CheckAvailableBalance(atmId);
             return new HttpApiActionResult(HttpStatusCode.OK, repose);
         }
-        [Route("StaffPaymentTransaction")]
+        [Route("StaffPaymentTransactionATM")]
         [SwaggerResponse(200, "Returns detail staff payment", typeof(ApiPaymentTransactionModel))]
         [SwaggerResponse(500, "Internal Server Error")]
         [SwaggerResponse(400, "Bad Request")]
         [SwaggerResponse(401, "Not Authorizated")]
         [HttpGet]
-        public IHttpActionResult PaymentTransaction(string accountNumber, double payment, int atmId)
+        public IHttpActionResult PaymentTransactionATM(string accountNumber, double payment, int atmId)
         {
-            var repose = _bllPaymentTransaction.PaymentTransaction(accountNumber, payment, atmId);
+            var repose = _bllPaymentTransaction.StaffPaymentTransactionATM(atmId,accountNumber,payment);
             return new HttpApiActionResult(HttpStatusCode.OK, repose);
         }
-        [Route("StaffTransactionStatistics")]
-        [SwaggerResponse(200, "Returns detail staff statistics transaction", typeof(ApiStaffTransactionStatisticsModel))]
+        [Route("StaffTransactionStatisticsCustomer")]
+        [SwaggerResponse(200, "Returns detail staff statistics transaction", typeof(ApiStaffTransactionStatisticsCustomerModel))]
         [SwaggerResponse(500, "Internal Server Error")]
         [SwaggerResponse(400, "Bad Request")]
         [SwaggerResponse(401, "Not Authorizated")]
         [HttpGet]
-        public IHttpActionResult StaffTransactionStatistics(string accountNumber)
+        public IHttpActionResult StaffTransactionStatisticsCustomer(string accountNumber)
         {
-            var repose = _bllCustomer.StaffTransactionStatistics(accountNumber);
+            var repose = _bllCustomer.StaffTransactionStatisticsCustomer(accountNumber);
             return new HttpApiActionResult(HttpStatusCode.OK, repose);
         }
-
+        [Route("StaffTransactionStatisticsATM")]
+        [SwaggerResponse(200, "Returns detail staff statistics transaction", typeof(ApiStaffTransactionStatisticsCustomerModel))]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Not Authorizated")]
+        [HttpGet]
+        public IHttpActionResult StaffTransactionStatisticsATM(int atmId)
+        {
+            var repose = _bllStaffTransactionStatistics.StaffTransactionStatistics(atmId);
+            return new HttpApiActionResult(HttpStatusCode.OK, repose);
+        }
         [Route("StaffAddCustomer")]
         [SwaggerResponse(200, "Returns detail staff add customer", typeof(ApiResult))]
         [SwaggerResponse(500, "Internal Server Error")]
@@ -70,7 +82,18 @@ namespace WebApi.Controllers
             var result = new ApiJsonResult() {};
             return new HttpApiActionResult(HttpStatusCode.OK, result);
         }
-
+        [Route("StaffUpdateCustomer")]
+        [SwaggerResponse(200, "Returns detail staff update  info customer", typeof(ApiResult))]
+        [SwaggerResponse(500, "Internal Server Error")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Not Authorizated")]
+        [HttpPost]
+        public IHttpActionResult StaffUpdateCustomer(string account, Customer customer)
+        {
+            _bllCustomer.UpdateInfoCustomer(account, customer);
+            var result = new ApiJsonResult() { };
+            return new HttpApiActionResult(HttpStatusCode.OK, result);
+        }
         [Route("ResetPasswordCustomer")]
         [SwaggerResponse(200, "Returns detail staff reset password for customer", typeof(ApiResult))]
         [SwaggerResponse(500, "Internal Server Error")]
@@ -83,5 +106,7 @@ namespace WebApi.Controllers
             var result = new ApiJsonResult() { };
             return new HttpApiActionResult(HttpStatusCode.OK, result);
         }
+
+       
     }
 }

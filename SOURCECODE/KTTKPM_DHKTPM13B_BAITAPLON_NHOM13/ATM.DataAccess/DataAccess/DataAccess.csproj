@@ -55,9 +55,9 @@
     <Compile Include="EntityDAL\INewDataAccessBase.cs" />
     <Compile Include="EntityDAL\IDataAccess.cs" />
     <Compile Include="EntityDAL\DataAccess.cs" />
-    <Compile Include="Migrations\202007040916488_ATM.cs" />
-    <Compile Include="Migrations\202007040916488_ATM.designer.cs">
-      <DependentUpon>202007040916488_ATM.cs</DependentUpon>
+    <Compile Include="Migrations\202007041455274_ATM.cs" />
+    <Compile Include="Migrations\202007041455274_ATM.designer.cs">
+      <DependentUpon>202007041455274_ATM.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,8 +77,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007040916488_ATM.resx">
-      <DependentUpon>202007040916488_ATM.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007041455274_ATM.resx">
+      <DependentUpon>202007041455274_ATM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

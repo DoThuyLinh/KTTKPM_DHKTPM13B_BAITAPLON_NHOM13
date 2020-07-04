@@ -41,7 +41,7 @@ namespace BusinessLogic.BLL
                 convert.Add(Int32.Parse(str1));
             }
             long max = convert.Max();
-            max = max + 1;
+            max +=1;
             if (type == Entities.AccountCard.AccountTypes.Visa)
             {
                 if (max < 10)
@@ -99,44 +99,66 @@ namespace BusinessLogic.BLL
         {
             try
             {
-                Customer customer1 = _customer.Add(customer);
-                AccountCard accountCard = new AccountCard(AddAccountCard(type),type,DateTime.Now,money,3300,1100,AccountCard.AccountRole.customer,AccountCard.AccountStatus.Start,bankId,customer1.PersonID);
-                _accountCard.Add(accountCard);
-                UserLogin userLogin = new UserLogin(accountCard.AccountNumber, "111111");
-                _userLogin.Add(userLogin);
-                return userLogin;
+
+                Customer temp = _customer.GetByCondition(x => x.PersonID == customer.PersonID);
+                if(temp !=null)
+                {
+                    AccountCard accountCard = new AccountCard(AddAccountCard(type), type, DateTime.Now, money, 3300, 1100, AccountCard.AccountRole.customer, AccountCard.AccountStatus.Start, bankId, temp.PersonID);
+                    _accountCard.Add(accountCard);
+                    UserLogin userLogin = new UserLogin(accountCard.AccountNumber, "111111");
+                    _userLogin.Add(userLogin);
+                    return userLogin;
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                
             }
+            return null;
         }
-        public ListApiStaffTransactionStatisticsModel StaffTransactionStatistics(string account)
+        public ListApiStaffTransactionStatisticsCustomerModel StaffTransactionStatisticsCustomer(string account)
         {
-            ListApiStaffTransactionStatisticsModel listApiStaffTransaction = new ListApiStaffTransactionStatisticsModel();
-            List<ApiStaffTransactionStatisticsModel> statisticsModels = new List<ApiStaffTransactionStatisticsModel>();
+            ListApiStaffTransactionStatisticsCustomerModel listApiStaffTransaction = new ListApiStaffTransactionStatisticsCustomerModel();
+            List<ApiStaffTransactionStatisticsCustomerModel> statisticsModels = new List<ApiStaffTransactionStatisticsCustomerModel>();
             List<ATMTransaction> transactions = _atmTransaction.GetByWhere(x => x.AccountNumber == account).ToList();
             AccountCard accountCard = _accountCard.GetByCondition(x => x.AccountNumber == account);
             Person person = _person.GetByCondition(x => x.PersonID == accountCard.PersonID);
-            foreach (var item in transactions)
+            if (transactions != null)
             {
-                ATMHistory atmHistory = _atmHistory.GetByCondition(x => x.ATMID == item.ATMID && x.ATMHistoryTime == item.TransactionTime);
-                if (atmHistory != null)
+                foreach (var item in transactions)
                 {
-                    ATMInfo info = _atmInfo.GetByCondition(x => x.ATMID == atmHistory.ATMID);
-                    statisticsModels.Add(new ApiStaffTransactionStatisticsModel()
+                    ATMHistory atmHistory = _atmHistory.GetByCondition(x => x.ATMID == item.ATMID && x.ATMHistoryTime == item.TransactionTime);
+                    if (atmHistory != null)
                     {
-                        AtmHistoryName = info.ATMName,
-                        AtmHistoryAddress = info.ATMAddress,
-                        TransactionMoney = item.TransactionMoney,
-                        TransactionTime = item.TransactionTime,
-                        TransactionType = item.TransactionType.ToString(),
-                        ApiPersonModel = new ApiPersonModel() { AccountNumber = account, PersonName = person.PersonName }
-                    });
+                        ATMInfo info = _atmInfo.GetByCondition(x => x.ATMID == atmHistory.ATMID);
+                        statisticsModels.Add(new ApiStaffTransactionStatisticsCustomerModel()
+                        {
+                            AtmHistoryName = info.ATMName,
+                            AtmHistoryAddress = info.ATMAddress,
+                            TransactionMoney = item.TransactionMoney,
+                            TransactionTime = item.TransactionTime,
+                            TransactionType = item.TransactionType.ToString(),
+                            ApiPersonModel = new ApiPersonModel() { AccountNumber = account, PersonName = person.PersonName }
+                        });
+                    }
+                    else
+                    {
+                        statisticsModels.Add(new ApiStaffTransactionStatisticsCustomerModel()
+                        {
+                            TransactionMoney = item.TransactionMoney,
+                            TransactionTime = item.TransactionTime,
+                            TransactionType = item.TransactionType.ToString(),
+                            ApiPersonModel = new ApiPersonModel() { AccountNumber = account, PersonName = person.PersonName }
+                        });
+                    }
                 }
+                listApiStaffTransaction.StaffTransactionStatisticsModels = statisticsModels;
+                return listApiStaffTransaction;
             }
-            listApiStaffTransaction.StaffTransactionStatisticsModels = statisticsModels;
+            else
+                listApiStaffTransaction.ErrorMessages = new List<string> { "Tài khoản chưa thực hiện giao dịch nào." };
             return listApiStaffTransaction;
+
         }
         public string ResetPassword(string account)
         {

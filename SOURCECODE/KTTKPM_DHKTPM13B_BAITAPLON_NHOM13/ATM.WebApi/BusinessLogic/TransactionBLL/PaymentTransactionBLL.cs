@@ -59,14 +59,14 @@ namespace BusinessLogic.TransactionBLL
                     }
                     try
                     {
-                        if (_accountCardBLL.UpdateBalanceAccountPayment(accountCard, paymentMoney - payment.PaymentFee))
+                        AccountCard balance =_accountCardBLL.UpdateBalanceAccountPayment(accountCard, paymentMoney - payment.PaymentFee);
+                        if (balance !=null)
                         {
                             ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmID);
                             _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber,atmHistory.ATMHistoryTime);
                             _atmTransactionBLL.AddTransaction(accountCard.AccountNumber, paymentMoney,atmHistory.ATMHistoryTime, atmID);
 
                             _atmInfoBLL.UpdateAvailableBalancePaymentATM(atmID, paymentMoney);
-                            AccountCard balance = _accountCard.GetByCondition(x => x.AccountNumber == accountCard.AccountNumber);
                             payment.AvailableBalance = balance.AvailableBalance;
                             return payment;
                         }
@@ -80,6 +80,36 @@ namespace BusinessLogic.TransactionBLL
                 else
                     payment.ErrorMessages = new List<string> { "Tối thiểu phải 50000đ" };
                 
+            }
+            return payment;
+        }
+        public ApiPaymentTransactionModel StaffPaymentTransactionATM(int atmId, string account, double transmoney)
+        {
+            ApiPaymentTransactionModel payment = new ApiPaymentTransactionModel();
+            UserLogin userLogin = _userLogin.GetByCondition(x => x.AccountNumber.Equals(account));
+            ATMInfo atmInfo = _atmInfo.GetByCondition(x => x.ATMID == atmId);
+            if(transmoney >= 1000000)
+            {
+                AccountCard accountCard = _accountCard.GetByCondition(x => x.AccountNumber.Equals(userLogin.AccountNumber));
+                payment.ApiPersonModel = _personBLL.PersonInfo(accountCard);
+                payment.TransactionMoney = transmoney;
+                try
+                {
+                    ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmId);
+                    _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber, atmHistory.ATMHistoryTime);
+                    ATMInfo balance = _atmInfoBLL.UpdateAvailableBalancePaymentATM(atmId, transmoney);
+                    payment.AvailableBalance = balance.ATMBalance;
+                    return payment;
+                }
+                catch (Exception ex)
+                {
+                    payment.ErrorMessages = new List<string> {ex.ToString(),"Không thể nạp tiền vào máy. " };
+                }
+            }
+            else
+            {
+                payment.ErrorMessages = new List<string> { "Số tiền không nhỏ hơn 1000000đ. " };
+
             }
             return payment;
         }
