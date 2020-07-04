@@ -1,6 +1,7 @@
 ﻿using ATM.ApiServices;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace ATM.Usercontrols
     /// </summary>
     public partial class LoginUC : UserControl
     {
+        private string atmId= ConfigurationManager.AppSettings["atmId"];
         private LoginService _loginService;
         public LoginUC()
         {
@@ -30,7 +32,7 @@ namespace ATM.Usercontrols
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            _loginService.GetLoginAsync("");
+            _loginService.GetLoginAsync(txtUser.Text,txtPass.Password,int.Parse(atmId));
             MainWindow.mainWindow.ShowAndHideUC("Customer");
         }
     }

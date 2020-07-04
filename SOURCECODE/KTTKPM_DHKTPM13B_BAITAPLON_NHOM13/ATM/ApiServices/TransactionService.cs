@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ATM.ApiServices
 {
-    class TransactionService
+    public class TransactionService
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApiModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -11,28 +12,32 @@ namespace ATM.ApiServices
 {
     public class LoginService
     {
-        static HttpClient client = new HttpClient();
-        public async void GetLoginAsync(string path)
+        private string _pathAPI;
+        static HttpClient _client;
+        public LoginService()
+        {
+            _client = new HttpClient();
+            _pathAPI = ConfigurationManager.AppSettings["WebApi"];
+        }
+        public async void GetLoginAsync(string acount,string pass, int atmId)
         {
             try
             {
-                path = ConfigurationManager.AppSettings["WebApi"];
-                var productStr = "";
-                HttpResponseMessage response = await client.GetAsync(path);
+                
+                var loginStr = "";
+                string apilink = _pathAPI + string.Format("Login?account={0}&pass={1}&atmId={2}",acount,pass,atmId);
+                HttpResponseMessage response = await _client.GetAsync(apilink);
                 if (response.IsSuccessStatusCode)
                 {
-                    productStr = await response.Content.ReadAsStringAsync();
-
+                    loginStr = await response.Content.ReadAsStringAsync();
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
-                    var strings = serializer.Deserialize<List<string>>(productStr);
+                    var repose = serializer.Deserialize<List<ApiUserLoginModel>>(loginStr);
                 }
             }
             catch (Exception ex)
             {
 
             }
-
-            //return product;
         }
     }
 }
