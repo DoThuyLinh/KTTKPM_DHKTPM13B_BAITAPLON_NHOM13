@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ATM.ApiServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,13 +21,16 @@ namespace ATM.Usercontrols
     /// </summary>
     public partial class LoginUC : UserControl
     {
+        private LoginService _loginService;
         public LoginUC()
         {
+            _loginService = new LoginService();
             InitializeComponent();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            _loginService.GetLoginAsync("");
             MainWindow.mainWindow.ShowAndHideUC("Customer");
         }
     }
