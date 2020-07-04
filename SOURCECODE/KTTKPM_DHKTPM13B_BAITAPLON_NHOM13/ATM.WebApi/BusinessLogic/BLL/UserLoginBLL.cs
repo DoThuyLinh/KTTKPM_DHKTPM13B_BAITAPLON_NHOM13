@@ -1,5 +1,6 @@
 ﻿using ApiModel;
 using DataAccess.EntityDAL;
+using DataAccess.Migrations;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,11 @@ namespace BusinessLogic.BLL
 {
     public class UserLoginBLL
     {
-        private DataAccess<UserLogin> _userLogin;
-        private DataAccess<AccountCard> _accountCard;
-        private DataAccess<Person> _person;
-        private PersonBLL _personBLL;
-        private AddHistoryBLL _addHistoryBLL;
+        private readonly DataAccess<UserLogin> _userLogin;
+        private readonly DataAccess<AccountCard> _accountCard;
+        private readonly DataAccess<Person> _person;
+        private readonly PersonBLL _personBLL;
+        private readonly AddHistoryBLL _addHistoryBLL;
         public UserLoginBLL()
         {
             _userLogin = new DataAccess<UserLogin>();
@@ -27,15 +28,13 @@ namespace BusinessLogic.BLL
         public ApiUserLoginModel UserLogin(string acc, string pass, int atmID)
         {
             ApiUserLoginModel userloginmodel = new ApiUserLoginModel();
-            userloginmodel.ApiPersonModel = new ApiPersonModel(null, null);
-            
 
             UserLogin userLogin = _userLogin.GetByCondition(x => x.AccountNumber.Equals(acc));
             AccountCard accountCard = _accountCard.GetByCondition(x => x.AccountNumber.Equals(userLogin.AccountNumber));
             if (userLogin.CountPassword > 3)
             {
-                UpdateAccountByCountPass(accountCard);
-                userloginmodel.ErrorMessages = new List<string> (){ "false","tai khoan da khoa"};
+                UpdateAccountStatusByCountPass(accountCard);
+                userloginmodel.ErrorMessages = new List<string> (){ "false","Tài khoản đã khoá."};
                 return userloginmodel;
             }
             else if (userLogin.Password.Equals(pass))
@@ -53,29 +52,32 @@ namespace BusinessLogic.BLL
                 }
                 try
                 {
-                    _addHistoryBLL.AddATMHistory(atmID);
-                    _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber);
+                    ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmID);
+                    _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber,atmHistory.ATMHistoryTime);
                     return userloginmodel;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    userloginmodel.ErrorMessages = new List<string> {ex.ToString(), "Đăng nhập không thành công."};
                     return userloginmodel;
                 }
             }
             else
             {
-                UpdateAccountStatusByCountPass(userLogin);
+                UpdateAccountPasswordByCountPass(userLogin);
+                userloginmodel.ErrorMessages = new List<string> { "Mật khẩu không chính xác." };
+
             }
             return userloginmodel;
             
         }
-        public bool UpdateAccountStatusByCountPass(UserLogin userLogin)
+        public bool UpdateAccountPasswordByCountPass(UserLogin userLogin)
         {
             userLogin.CountPassword += 1;
             _userLogin.Update(userLogin);
             return true;
         }
-        public bool UpdateAccountByCountPass(AccountCard account)
+        public bool UpdateAccountStatusByCountPass(AccountCard account)
         {
             account.Status = AccountCard.AccountStatus.Pause;
             _accountCard.Update(account);

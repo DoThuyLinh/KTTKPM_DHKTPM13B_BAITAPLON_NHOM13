@@ -13,11 +13,11 @@ namespace WebApi.Controllers
 {
     public class TransactionController : ApiController
     {
-        private PaymentTransactionBLL _bllPaymentTransaction;
-        private TransferTransactionBLL _bllPransferTransaction;
-        private WithdrawlTransactionBLL _bllWithdrawlTransaction;
-        private ChangePinTransactionBLL _bllChangePinTransaction;
-        private CheckBalanceTransactionBLL _bllCheckBalanceTransactionBLL;
+        private readonly PaymentTransactionBLL _bllPaymentTransaction;
+        private readonly TransferTransactionBLL _bllPransferTransaction;
+        private readonly WithdrawlTransactionBLL _bllWithdrawlTransaction;
+        private readonly ChangePinTransactionBLL _bllChangePinTransaction;
+        private readonly CheckBalanceTransactionBLL _bllCheckBalanceTransactionBLL;
         public TransactionController()
         {
             _bllPaymentTransaction = new PaymentTransactionBLL();

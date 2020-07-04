@@ -10,14 +10,14 @@ namespace BusinessLogic.BLL
 {
     public class AtmTransactionBLL
     {
-        private DataAccess<ATMTransaction> _atmTransaction;
+        private readonly DataAccess<ATMTransaction> _atmTransaction;
         public AtmTransactionBLL()
         {
             _atmTransaction = new DataAccess<ATMTransaction>();
         }
-        public bool AddTransaction(string acc, double transMoney, int atmID)
+        public bool AddTransaction(string acc, double transMoney,DateTime dateTime, int atmID)
         {
-            ATMTransaction transaction = new ATMTransaction(transMoney, DateTime.Now, ATMTransaction.TransactionTypes.Withdrawl, acc, acc, atmID);
+            ATMTransaction transaction = new ATMTransaction(transMoney, dateTime, ATMTransaction.TransactionTypes.Withdrawl, acc, acc, atmID);
             try
             {
                 _atmTransaction.Add(transaction);
@@ -28,9 +28,9 @@ namespace BusinessLogic.BLL
                 return false;
             }
         }
-        public bool AddTransferTransaction(string acc, string beneficiary, double transMoney, int atmID)
+        public bool AddTransferTransaction(string acc, string beneficiary, double transMoney,DateTime dateTime, int atmID)
         {
-            ATMTransaction transaction = new ATMTransaction(transMoney, DateTime.Now, ATMTransaction.TransactionTypes.Transfer, beneficiary, acc, atmID);
+            ATMTransaction transaction = new ATMTransaction(transMoney, dateTime, ATMTransaction.TransactionTypes.Transfer, beneficiary, acc, atmID);
             try
             {
                 _atmTransaction.Add(transaction);

@@ -10,7 +10,7 @@ namespace BusinessLogic.BLL
 {
     public class AccountCardBLL
     {
-        private DataAccess<AccountCard> _accountCard;
+        private readonly DataAccess<AccountCard> _accountCard;
         public AccountCardBLL()
         {
             _accountCard = new DataAccess<AccountCard>();
@@ -20,7 +20,7 @@ namespace BusinessLogic.BLL
             try
             {
                 var accountcard = _accountCard.GetByCondition(x => x.AccountNumber.Equals(account.AccountNumber));
-                if (accountcard != null)
+                if (accountcard.AvailableBalance > transMoney+100000)
                 {
                     double balance = accountcard.AvailableBalance - transMoney;
                     if ((accountcard.AvailableBalance - transMoney) >= 100000)

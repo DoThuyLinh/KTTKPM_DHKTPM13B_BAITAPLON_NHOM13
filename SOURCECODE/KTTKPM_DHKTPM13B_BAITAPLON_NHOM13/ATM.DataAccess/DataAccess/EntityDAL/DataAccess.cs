@@ -10,7 +10,7 @@ namespace DataAccess.EntityDAL
 {
     public class DataAccess<T> : IDataAccess<T> where T : class
     {
-        private AtmDataContext _dbConext;
+        private readonly AtmDataContext _dbConext;
         public DataAccess()
         {
             _dbConext = new AtmDataContext();

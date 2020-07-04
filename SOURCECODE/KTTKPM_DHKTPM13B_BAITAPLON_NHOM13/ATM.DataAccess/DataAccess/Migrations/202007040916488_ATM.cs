@@ -114,6 +114,7 @@
                         PersonID = c.Int(nullable: false, identity: true),
                         PersonName = c.String(nullable: false),
                         PersonBirth = c.DateTime(nullable: false),
+                        IdCard = c.String(nullable: false),
                         PersonPhone = c.String(nullable: false),
                         PersonAddress = c.String(nullable: false),
                         PersonEmail = c.String(nullable: false),

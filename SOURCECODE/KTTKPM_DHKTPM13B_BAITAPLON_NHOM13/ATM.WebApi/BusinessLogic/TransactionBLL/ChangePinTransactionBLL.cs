@@ -12,8 +12,8 @@ namespace BusinessLogic.TransactionBLL
 {
     public class ChangePinTransactionBLL
     {
-        private DataAccess<UserLogin> _userLogin;
-        private AddHistoryBLL _addHistoryBLL;
+        private readonly DataAccess<UserLogin> _userLogin;
+        private readonly AddHistoryBLL _addHistoryBLL;
         public ChangePinTransactionBLL()
         {
             _userLogin = new DataAccess<UserLogin>();
@@ -30,7 +30,7 @@ namespace BusinessLogic.TransactionBLL
                 {
                     userLogin.Password = newPass;
                     _userLogin.Update(userLogin);
-                    _addHistoryBLL.AddAccountHistory(acc);
+                    _addHistoryBLL.AddAccountHistory(acc,DateTime.Now);
                     apiChangePinTransactionModel.Message = "Cập nhật mật khẩu thành công.";
                 }
             }

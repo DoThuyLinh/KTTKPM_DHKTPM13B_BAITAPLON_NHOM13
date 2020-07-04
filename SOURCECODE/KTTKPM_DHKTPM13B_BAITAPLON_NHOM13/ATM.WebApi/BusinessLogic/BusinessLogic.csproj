@@ -55,12 +55,15 @@
     <Compile Include="BLL\AddHistoryBLL.cs" />
     <Compile Include="BLL\ATMInfoBLL.cs" />
     <Compile Include="BLL\AtmTransactionBLL.cs" />
+    <Compile Include="BLL\CustomerBLL.cs" />
     <Compile Include="BLL\PersonBLL.cs" />
     <Compile Include="BLL\UserLoginBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionBLL\ChangePinTransactionBLL.cs" />
     <Compile Include="TransactionBLL\CheckBalanceTransactionBLL.cs" />
     <Compile Include="TransactionBLL\PaymentTransactionBLL.cs" />
+    <Compile Include="TransactionBLL\StaffCheckBalanceATMBLL.cs" />
+    <Compile Include="TransactionBLL\StaffTransactionStatisticsBLL.cs" />
     <Compile Include="TransactionBLL\TransferTransactionBLL.cs" />
     <Compile Include="TransactionBLL\WithdrawlTransactionBLL.cs" />
   </ItemGroup>

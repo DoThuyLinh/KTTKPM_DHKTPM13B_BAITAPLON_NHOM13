@@ -55,6 +55,8 @@
     <Compile Include="ApiCheckBalanceTransactionModel.cs" />
     <Compile Include="ApiPaymentTransactionModel.cs" />
     <Compile Include="ApiPersonModel.cs" />
+    <Compile Include="ApiStaffCheckBalanceATMModel.cs" />
+    <Compile Include="ApiStaffTransactionStatisticsModel.cs" />
     <Compile Include="ApiTransferTransactionModel.cs" />
     <Compile Include="ApiWithdrawlTransactionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

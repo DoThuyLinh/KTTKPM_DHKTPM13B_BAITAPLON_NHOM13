@@ -12,16 +12,15 @@ namespace BusinessLogic.TransactionBLL
 {
     public class TransferTransactionBLL
     {
-        private DataAccess<UserLogin> _userLogin;
-        private DataAccess<AccountCard> _accountCard;
-        private DataAccess<ATMInfo> _atmInfo;
-        private DataAccess<BankInfo> _bankInfo;
+        private readonly DataAccess<UserLogin> _userLogin;
+        private readonly DataAccess<AccountCard> _accountCard;
+        private readonly DataAccess<ATMInfo> _atmInfo;
+        private readonly DataAccess<BankInfo> _bankInfo;
 
-        private PersonBLL _personBLL;
-        private AccountCardBLL _accountCardBLL;
-        private AddHistoryBLL _addHistoryBLL;
-        private AtmTransactionBLL _atmTransactionBLL;
-        private ATMInfoBLL _atmInfoBLL;
+        private readonly PersonBLL _personBLL;
+        private readonly AccountCardBLL _accountCardBLL;
+        private readonly AddHistoryBLL _addHistoryBLL;
+        private readonly AtmTransactionBLL _atmTransactionBLL;
         public TransferTransactionBLL()
         {
             _userLogin = new DataAccess<UserLogin>();
@@ -32,7 +31,6 @@ namespace BusinessLogic.TransactionBLL
             _accountCardBLL = new AccountCardBLL();
             _addHistoryBLL = new AddHistoryBLL();
             _atmTransactionBLL = new AtmTransactionBLL();
-            _atmInfoBLL = new ATMInfoBLL();
         }
         public ApiTransferTransactionModel TransferTransaction(string acc, string beneficiary, double transMoney, int atmID)
         {
@@ -59,22 +57,26 @@ namespace BusinessLogic.TransactionBLL
 
                 try
                 {
-                    _accountCardBLL.UpdateBalanceAccount(accountCard, transMoney + transfer.TransferFee);
-                    _accountCardBLL.UpdateBalanceAccountPayment(benefic, transMoney);
+                    if(_accountCardBLL.UpdateBalanceAccount(accountCard, transMoney + transfer.TransferFee))
+                    {
+                        _accountCardBLL.UpdateBalanceAccountPayment(benefic, transMoney);
+                        ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmID);
+                        _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber,atmHistory.ATMHistoryTime);
+                        _atmTransactionBLL.AddTransferTransaction(accountCard.AccountNumber, beneficiary, transMoney,atmHistory.ATMHistoryTime, atmID);
 
-                    _addHistoryBLL.AddATMHistory(atmID);
-                    _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber);
-                    _atmTransactionBLL.AddTransferTransaction(accountCard.AccountNumber, beneficiary, transMoney, atmID);
-
-                    transfer.AvailableBalance = accountCard.AvailableBalance;
-                    return transfer;
+                        AccountCard balance = _accountCard.GetByCondition(x => x.AccountNumber == accountCard.AccountNumber);
+                        transfer.AvailableBalance = balance.AvailableBalance;
+                        return transfer;
+                    }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return null;
+                    transfer.ErrorMessages = new List<string> { ex.ToString(), "Tài khoản của bạn không đủ." };
                 }
             }
-            return null;
+            else
+                transfer.ErrorMessages = new List<string> { "Tài khoản thụ hưởng không hợp lệ." };
+            return transfer;
         }
     }
 }

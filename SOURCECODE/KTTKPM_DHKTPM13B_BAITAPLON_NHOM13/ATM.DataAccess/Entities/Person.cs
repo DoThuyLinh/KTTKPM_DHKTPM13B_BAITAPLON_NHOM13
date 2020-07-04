@@ -18,7 +18,8 @@ namespace Entities
 
         [Required(ErrorMessage = "Property: Code Error: The PersonBirth field is required.")]
         public DateTime PersonBirth { get; set; }
-
+        [Required(ErrorMessage =("Property: Code Error: The IdCard field is required."))]
+        public string IdCard { get; set; }
         [Required(ErrorMessage = "Property: Code Error: The PersonPhone field is required.")]
         [RegularExpression("^0\\d{9}$")]
         public string PersonPhone { get; set; }
