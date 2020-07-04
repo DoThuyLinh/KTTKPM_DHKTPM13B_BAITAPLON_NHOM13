@@ -25,10 +25,17 @@
         </Grid.ColumnDefinitions>
         <Image Opacity="0.4" Source="../Images/door.jpg" Stretch="UniformToFill" Grid.RowSpan="8" Grid.ColumnSpan="3" />
         <Grid Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" >
-            <Border Background="White"  CornerRadius="20 20 20 20" Margin="50 0 50 0" BorderThickness="5 5 5 5" BorderBrush="White">
+            <!--<Border   CornerRadius="20 20 20 20" Margin="50 0 50 0" BorderThickness="5 5 5 5" BorderBrush="White">
                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <TextBlock Text="1234" Foreground="#4689d7" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" />
+            </Border>-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="" x:Name="txtName" Foreground="#D3D3D3" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80" />
+                <TextBlock Text="" x:Name="txtAccount" Foreground="#D3D3D3" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="80" Grid.Row="1" />
+            </Grid>
         </Grid>
         <Grid Grid.Row="4" Grid.Column="0" Height="72" >
 

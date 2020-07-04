@@ -75,10 +75,14 @@
             </Button>
         </Grid>
         <Grid Grid.Row="6" Grid.Column="2"  Height="72" >
-            <Border Background="Transparent"  CornerRadius="20 0 0 20" BorderThickness="5 0 0 0" BorderBrush="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="39*"/>
+                <ColumnDefinition Width="41*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="Transparent"  CornerRadius="20 0 0 20" BorderThickness="5 0 0 0" BorderBrush="White" Grid.ColumnSpan="2">
                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
-            <Button Content="CANCEL" x:Name="btnCancel" FontSize="30" Foreground="#4689d7" FontWeight="Bold"  Margin="20 0 0 0" Height="70" Click="btnCancel_Click">
+            <Button Content="CANCEL" x:Name="btnCancel" FontSize="30" Foreground="#4689d7" FontWeight="Bold"  Margin="20,1,0,1" Height="70" Click="btnCancel_Click" Grid.ColumnSpan="2">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Foreground" Value="White"/>

@@ -1,4 +1,5 @@
-﻿using ATM.ApiServices;
+﻿using ApiModel;
+using ATM.ApiServices;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,8 +33,11 @@ namespace ATM.Usercontrols
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            _loginService.GetLoginAsync(txtUser.Text,txtPass.Password,int.Parse(atmId));
-            MainWindow.mainWindow.ShowAndHideUC("Customer");
+            var account= _loginService.GetLoginAsync(txtUser.Text,txtPass.Password,int.Parse(atmId));
+            if( account.Role == ApiUserLoginModel.AccountRole.Staff)
+                MainWindow.mainWindow.ShowAndHideUC("Staff", account);
+            else
+                MainWindow.mainWindow.ShowAndHideUC("Customer", account);
         }
     }
 }

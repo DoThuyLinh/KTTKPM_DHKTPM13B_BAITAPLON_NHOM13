@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ATM.ApiServices;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,39 +22,47 @@ namespace ATM.Usercontrols
     /// </summary>
     public partial class CustomerUC : UserControl
     {
+        private string atmId = ConfigurationManager.AppSettings["atmId"];
+        private TransactionService _transactionService;
         public CustomerUC()
         {
+            _transactionService = new TransactionService();
             InitializeComponent();
         }
 
         private void btnRutTien_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("HowMuch"); 
+            //var result = _transactionService.GetWithdrawlTransaction()
+            MainWindow.mainWindow.ShowAndHideUC("HowMuch", null); 
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("Login");
+            MainWindow.mainWindow.ShowAndHideUC("Login", null);
         }
 
         private void btnDoiMatKhau_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("ChangePinTransaction");
+
+            MainWindow.mainWindow.ShowAndHideUC("ChangePinTransaction", null);
         }
 
         private void btnNapTien_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("PaymentTransaction");
+            //var result = _transactionService.GetPaymentTransaction()
+            MainWindow.mainWindow.ShowAndHideUC("PaymentTransaction", null);
         }
 
         private void btnXemSoDu_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("CheckBalanceTransaction");
+            var result = _transactionService.GetCheckBalanceTransaction(MainWindow.account);
+            MainWindow.mainWindow.ShowAndHideUC("ShowMessageBalance", result);
         }
 
         private void btnChuyenTien_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("TransferTransaction");
+            //var result = _transactionService.GetTransferTransaction()
+            MainWindow.mainWindow.ShowAndHideUC("TransferTransaction", null);
         }
     }
 }

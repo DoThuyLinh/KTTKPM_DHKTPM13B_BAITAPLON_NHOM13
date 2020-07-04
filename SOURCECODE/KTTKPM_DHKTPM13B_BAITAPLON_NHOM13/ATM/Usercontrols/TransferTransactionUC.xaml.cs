@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ATM.ApiServices;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,19 +22,25 @@ namespace ATM.Usercontrols
     /// </summary>
     public partial class TransferTransactionUC : UserControl
     {
+        private string _atmId = ConfigurationManager.AppSettings["atmId"];
+        private TransactionService _transactionService;
         public TransferTransactionUC()
         {
+            _transactionService = new TransactionService();
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+       
 
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            var result = _transactionService.GetTransferTransaction(MainWindow.account, txtTaiKhoanNhan.Text, double.Parse(txtMoney.Text),int.Parse(_atmId));
+            MainWindow.mainWindow.ShowAndHideUC("ShowMessagePay", result);
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("Login");
+            MainWindow.mainWindow.ShowAndHideUC("Login", null);
         }
     }
 }

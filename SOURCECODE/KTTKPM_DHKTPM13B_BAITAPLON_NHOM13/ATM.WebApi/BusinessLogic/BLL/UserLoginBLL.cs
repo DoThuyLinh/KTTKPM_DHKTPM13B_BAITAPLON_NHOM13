@@ -53,7 +53,8 @@ namespace BusinessLogic.BLL
                 try
                 {
                     ATMHistory atmHistory = _addHistoryBLL.AddATMHistory(atmID);
-                    _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber,atmHistory.ATMHistoryTime);
+                    if(atmHistory!= null)
+                        _addHistoryBLL.AddAccountHistory(accountCard.AccountNumber,atmHistory.ATMHistoryTime);
                     return userloginmodel;
                 }
                 catch (Exception ex)

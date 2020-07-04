@@ -23,6 +23,10 @@
         <UC:CustomerUC x:Name="Customer"/>
         <UC:ShowMessageUC x:Name="ShowMessage"/>
         <UC:HowMuch x:Name="HowMuch"/>
+        <UC:InputMoneyUC x:Name="InputMoney"/>
+        <UC:ShowMessageBill x:Name="ShowMessageBill"/>
+        <UC:ShowMessagePay x:Name="ShowMessagePay"/>
+        <UC:ShowMessageBalance x:Name="ShowMessageBalance"/>
 
     </Grid>
 </Window>

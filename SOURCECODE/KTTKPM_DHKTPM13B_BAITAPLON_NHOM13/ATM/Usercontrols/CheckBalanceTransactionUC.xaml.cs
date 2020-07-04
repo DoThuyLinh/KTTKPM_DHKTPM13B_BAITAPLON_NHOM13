@@ -27,12 +27,12 @@ namespace ATM.Usercontrols
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("Login");
+            MainWindow.mainWindow.ShowAndHideUC("Login", null);
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("Customer");
+            MainWindow.mainWindow.ShowAndHideUC("Customer", null);
         }
     }
 }

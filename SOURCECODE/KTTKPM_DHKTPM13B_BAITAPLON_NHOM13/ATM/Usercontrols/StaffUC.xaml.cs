@@ -27,32 +27,32 @@ namespace ATM.Usercontrols
 
         private void ThongKeGiaoDich_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("");
+            MainWindow.mainWindow.ShowAndHideUC("", null);
         }
 
         private void btnKiemTraLuongTien_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("");
+            MainWindow.mainWindow.ShowAndHideUC("", null);
         }
 
         private void btnShutdow_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("");
+            MainWindow.mainWindow.ShowAndHideUC("", null);
         }
 
         private void btnNapTien_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("");
+            MainWindow.mainWindow.ShowAndHideUC("", null);
         }
 
         private void btnDoiMatKhau_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("ChangePinTransaction");
+            MainWindow.mainWindow.ShowAndHideUC("ChangePinTransaction", null);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.mainWindow.ShowAndHideUC("Login");
+            MainWindow.mainWindow.ShowAndHideUC("Login", null);
         }
     }
 }
